@@ -1,11 +1,12 @@
 from utils import UnionFind
-from utils import optimized_edit_distance
 from utils import get_similarity_coefficient
+from utils import similarity_method
 from utils import get_token_table
 
 from pygments import lex
 from pygments.lexers import guess_lexer
-from pygments.token import Token
+
+from constants import IRRELEVANT_TOKENS
 
 def get_tokenized_code(code_string, token_table):
     """
@@ -17,39 +18,12 @@ def get_tokenized_code(code_string, token_table):
     Returns:
         list: A list of relevant token types from the tokenized code.
     """
-    irrelevant_tokens = {
-        Token.Comment,
-        Token.Comment.Hashbang,
-        Token.Comment.Multiline,
-        Token.Comment.Preproc,
-        Token.Comment.PreprocFile,
-        Token.Comment.Single,
-        Token.Comment.Special,
-        Token.Text,
-        Token.Whitespace,
-        Token.Punctuation,
-        Token.Punctuation.Marker,
-        Token.String.Doc,
-        Token.Generic,
-        Token.Generic.Deleted,
-        Token.Generic.Emph,
-        Token.Generic.Error,
-        Token.Generic.Heading,
-        Token.Generic.Inserted,
-        Token.Generic.Output,
-        Token.Generic.Prompt,
-        Token.Generic.Strong,
-        Token.Generic.EmphStrong,
-        Token.Generic.Subheading,
-        Token.Generic.Traceback,
-        Token.Keyword.Namespace,
-    }
 
     lexer = guess_lexer(code_string)
     tokens = []
     for token in lex(code_string, lexer):
         token_type = token[0]
-        if token_type not in irrelevant_tokens:
+        if token_type not in IRRELEVANT_TOKENS:
             tokens.append(token_table[token_type])
     return tokens
 
@@ -80,8 +54,8 @@ def similarity_grouper(file_names, file_contents, threshold, window_percentage):
                 if uf.find(j) == j:
                     seq_b = tokenized_files[j]
                     len_b = len(tokenized_files[j])
-                    edit_distance = optimized_edit_distance(seq_a, seq_b, window_percentage)
-                    similarity_percentage = get_similarity_coefficient(edit_distance, len_a, len_b)
+                    edit_distance = similarity_method('myers', seq_a, seq_b, window_percentage)
+                    similarity_percentage = get_similarity_coefficient('myers', edit_distance, len_a, len_b)
                     if similarity_percentage > threshold:
                         uf.union(i, j)
 

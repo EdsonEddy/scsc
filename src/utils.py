@@ -131,7 +131,7 @@ def optimized_edit_distance(sequence_a, sequence_b, window_percentage):
     # Return the minimum cost to transform sequence_a into sequence_b    
     return dp[1][len_b - 1]
 
-def get_similarity_coefficient(edit_distance, len_seq_a, len_seq_b):
+def get_similarity_coefficient(method_type, edit_distance, len_seq_a, len_seq_b):
     """
     Calculate the similarity percentage between two sequences based on their edit distance.
     Args:
@@ -142,10 +142,26 @@ def get_similarity_coefficient(edit_distance, len_seq_a, len_seq_b):
         float: The similarity percentage between the two sequences.
     """
 
-    max_length = max(len_seq_a, len_seq_b)
-    return (1 - edit_distance / max_length)
+    result = 0
+    if method_type == "levenshtein":
+        max_length = max(len_seq_a, len_seq_b)
+        result = (1 - edit_distance / max_length)
+    elif method_type == "myers":
+        result = (1 - edit_distance / (len_seq_a + len_seq_b))
+    return result
 
 def get_token_table():
+    """
+    Generates a token table mapping type keys to their corresponding index values.
+    This function iterates over the keys in the STANDARD_TYPES dictionary, splits each key
+    by periods, and assigns an index to each unique key part. It then creates a token table
+    where each type key is mapped to a tuple containing the index of the first and last part
+    of the key.
+    Returns:
+        dict: A dictionary where each key is a type key from STANDARD_TYPES and each value
+              is a tuple of two integers representing the index of the first and last part
+              of the key.
+    """
     type_indexes = {}
     token_table = {}
     
@@ -155,3 +171,43 @@ def get_token_table():
         token_table[type_key] = (value[0], value[-1])
         
     return token_table
+
+def myers_diff(sequence_a, sequence_b):
+    """
+    Calculate the edit distance between two sequences using the Myers diff algorithm.
+    Args:
+        sequence_a (list): The first sequence.
+        sequence_b (list): The second sequence.
+    Returns:
+        int: The minimum cost to transform sequence_a into sequence_b.
+    Description:
+        This function implements the Myers diff algorithm to calculate the edit distance between
+        two sequences. The algorithm uses a linear space complexity and a time complexity of O((N+M)D)
+        where N and M are the lengths of the sequences and D is the edit distance.
+    """
+    len_a = len(sequence_a)
+    len_b = len(sequence_b)
+    max_length = len_a + len_b
+    v = [0] * (2 * max_length + 1)
+    v[1] = 0
+    for d in range(max_length + 1):
+        for k in range(-d, d + 1, 2):
+            if k == -d or (k != d and v[k - 1] < v[k + 1]):
+                x = v[k + 1]
+            else:
+                x = v[k - 1] + 1
+            y = x - k
+            while x < len_a and y < len_b and sequence_a[x][1] == sequence_b[y][1]:
+                x += 1
+                y += 1
+            v[k] = x
+            if x >= len_a and y >= len_b:
+                return d
+    return max_length
+
+def similarity_method(method_type, sequence_a, sequence_b, window_percentage):
+    if method_type == "levenshtein":
+        return optimized_edit_distance(sequence_a, sequence_b, window_percentage)
+    elif method_type == "myers":
+        return myers_diff(sequence_a, sequence_b)
+    return None

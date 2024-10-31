@@ -4,7 +4,7 @@ setup(
     name="pysimchecker",
     version="0.1.0",
     package_dir={'': 'src'},
-	py_modules=["main", "file_utils", "similarity", "utils"],
+	py_modules=["main", "file_utils", "similarity", "utils", "constants"],
         install_requires=[
         "pygments",
     ],
