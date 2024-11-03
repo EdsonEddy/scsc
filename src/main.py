@@ -22,9 +22,6 @@ def main():
     # Add the 'threshold' argument with range validation (0.0 - 1.0)
     parser.add_argument('--threshold', '-t', type=get_threshold, default=0.75, help='The similarity threshold (default: 0.75, range: 0.0 - 1.0)')
     
-    # Add the 'window-percentage' argument with range validation (0.0 - 1.0)
-    parser.add_argument('--window-percentage', '-w', type=get_window_percentage, default=1.0, help='The window percentage (default: 1.0, range: 0.0 - 1.0)')
-
     # Parse the arguments
     args = parser.parse_args()
     
@@ -33,13 +30,16 @@ def main():
 
     if len(file_names) > 1:
         # Group the files based on similarity
-        groups = similarity_grouper(file_names, file_contents, args.threshold, args.window_percentage)
+        groups = similarity_grouper(file_names, file_contents, args.threshold)
 
         # Display the grouped files
-        for group_index, file_group in enumerate(groups):
-            print(f"Group {group_index + 1}:")
-            for file in file_group:
-                print(file)
+        for file_group in groups:
+            if len(file_group) > 1:
+                print("Files that are similar")
+                for file in file_group:
+                    print(file)
+            else:
+                print("File that is unique", file_group[0])
     else:
         print("No files to compare.")
 

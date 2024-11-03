@@ -75,7 +75,6 @@ Contributions are welcome. Please follow these steps to contribute:
 ## Additional Documentation
 For more information on the techniques used, you can refer to the following resources:
 
-- [Edit Distance](https://en.wikipedia.org/wiki/Levenshtein_distance)
 - [Tokenization](https://en.wikipedia.org/wiki/Tokenization)
 
 ## License
