@@ -2,13 +2,14 @@ from utils import UnionFind
 from utils import get_similarity_coefficient
 from utils import get_token_table
 from utils import myers_diff
+from utils import MyersDiff
 
 from pygments import lex
 from pygments.lexers import guess_lexer
 
 from constants import IRRELEVANT_TOKENS
 
-def get_tokenized_code(code_string, token_table):
+def get_tokenized_code(code_string, token_table, withTokenText=False):
     """
     Tokenizes the given code string and filters out irrelevant tokens.
 
@@ -24,8 +25,20 @@ def get_tokenized_code(code_string, token_table):
     for token in lex(code_string, lexer):
         token_type = token[0]
         if token_type not in IRRELEVANT_TOKENS:
-            tokens.append(token_table[token_type])
+            token_content = token_table[token_type]
+            if withTokenText:
+                token_content.append(token[1])
+            tokens.append(token_content)
     return tokens
+
+def simple_similarity_checker(file_names, file_contents, threshold):
+    token_table = get_token_table()
+    tokenized_file1 = get_tokenized_code(file_contents[0], token_table)
+    tokenized_file2 = get_tokenized_code(file_contents[1], token_table)
+    diff = MyersDiff()
+    diff.calculate_diff(tokenized_file1, tokenized_file2)
+    diff_changes = diff.get_changes()
+    
 
 def similarity_grouper(file_names, file_contents, threshold):
     """

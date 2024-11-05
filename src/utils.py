@@ -2,6 +2,7 @@ import argparse
 from pathlib import Path
 from pygments.token import STANDARD_TYPES
 from collections import namedtuple
+from constants import ADD, DELETE, KEEP
 
 # Utility functions for argument parsing
 def get_file(file_path):
@@ -101,9 +102,42 @@ def get_token_table():
     for type_key in STANDARD_TYPES.keys():
         keys = str(type_key).split(".")
         value = [type_indexes.setdefault(key, len(type_indexes)) for key in keys]
-        token_table[type_key] = (value[0], value[-1])
+        token_table[type_key] = [value[0], value[-1]]
         
     return token_table
+
+def myers_diff(sequence_a, sequence_b):
+    """
+    Calculate the edit distance between two sequences using the Myers diff algorithm.
+    Args:
+        sequence_a (list): The first sequence.
+        sequence_b (list): The second sequence.
+    Returns:
+        int: The minimum cost to transform sequence_a into sequence_b.
+    Description:
+        This function implements the Myers diff algorithm to calculate the edit distance between
+        two sequences. The algorithm uses a linear space complexity and a time complexity of O((N+M)D)
+        where N and M are the lengths of the sequences and D is the edit distance.
+    """
+    len_a = len(sequence_a)
+    len_b = len(sequence_b)
+    max_length = len_a + len_b
+    v = [0] * (2 * max_length + 1)
+    v[1] = 0
+    for d in range(max_length + 1):
+        for k in range(-d, d + 1, 2):
+            if k == -d or (k != d and v[k - 1] < v[k + 1]):
+                x = v[k + 1]
+            else:
+                x = v[k - 1] + 1
+            y = x - k
+            while x < len_a and y < len_b and sequence_a[x][1] == sequence_b[y][1]:
+                x += 1
+                y += 1
+            v[k] = x
+            if x >= len_a and y >= len_b:
+                return d
+    return max_length
 
 class MyersDiff:
     Keep = namedtuple('Keep', ['item'])
@@ -116,13 +150,11 @@ class MyersDiff:
         self.history = []
 
     def calculate_diff(self, a_seq, b_seq):
-        self.a_seq = a_seq
-        self.b_seq = b_seq
-        self.a_max = len(a_seq)
-        self.b_max = len(b_seq)
+        a_max = len(a_seq)
+        b_max = len(b_seq)
         self.frontier = {1: self.Frontier(0, [])}
 
-        for d in range(self.a_max + self.b_max + 1):
+        for d in range(a_max + b_max + 1):
             for k in range(-d, d + 1, 2):
                 go_down = (k == -d or (k != d and self.frontier[k - 1].x < self.frontier[k + 1].x))
                 if go_down:
@@ -135,19 +167,19 @@ class MyersDiff:
                 current_history = current_history[:]
                 y = x - k
 
-                if 1 <= y <= self.b_max and go_down:
-                    current_history.append(self.Insert(self.b_seq[y - 1]))
-                elif 1 <= x <= self.a_max:
-                    current_history.append(self.Remove(self.a_seq[x - 1]))
+                if 1 <= y <= b_max and go_down:
+                    current_history.append(self.Insert(b_seq[y - 1]))
+                elif 1 <= x <= a_max:
+                    current_history.append(self.Remove(a_seq[x - 1]))
 
-                while x < self.a_max and y < self.b_max and self.a_seq[x] == self.b_seq[y]:
+                while x < a_max and y < b_max and a_seq[x] == b_seq[y]:
                     x += 1
                     y += 1
-                    current_history.append(self.Keep(self.a_seq[x - 1]))
+                    current_history.append(self.Keep(a_seq[x - 1]))
 
                 self.frontier[k] = self.Frontier(x, current_history)
 
-                if x >= self.a_max and y >= self.b_max:
+                if x >= a_max and y >= b_max:
                     self.history = current_history
                     return
 
@@ -168,9 +200,9 @@ class MyersDiff:
         changes = []
         for elem in self.history:
             if isinstance(elem, self.Keep):
-                changes.append(' ' + str(elem.item))
+                changes.append(KEEP + str(elem.item))
             elif isinstance(elem, self.Insert):
-                changes.append('+' + str(elem.item))
+                changes.append(ADD + str(elem.item))
             elif isinstance(elem, self.Remove):
-                changes.append('-' + str(elem.item))
+                changes.append(DELETE + str(elem.item))
         return changes

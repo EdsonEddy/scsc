@@ -28,20 +28,23 @@ def main():
     # Process the files
     file_names, file_contents = process_files(args)
 
-    if len(file_names) > 1:
-        # Group the files based on similarity
-        groups = similarity_grouper(file_names, file_contents, args.threshold)
-
-        # Display the grouped files
-        for file_group in groups:
-            if len(file_group) > 1:
-                print("Files that are similar")
-                for file in file_group:
-                    print(file)
-            else:
-                print("File that is unique", file_group[0])
+    if args.files:
+        print("Files to compare")
     else:
-        print("No files to compare.")
+        if len(file_names) > 1:
+            # Group the files based on similarity
+            groups = similarity_grouper(file_names, file_contents, args.threshold)
+
+            # Display the grouped files
+            for file_group in groups:
+                if len(file_group) > 1:
+                    print("Files that are similar")
+                    for file in file_group:
+                        print(file)
+                else:
+                    print("File that is unique", file_group[0])
+        else:
+            print("No files to compare.")
 
 if __name__ == "__main__":
     main()
