@@ -30,6 +30,11 @@ IRRELEVANT_TOKENS = {
 }
 
 # Constants for the Myers' Algorithm
+KEEP = 'K'
 ADD = '+'
 DELETE = '-'
-KEEP = 'K'
+
+# ANSI color codes for terminal output
+ADD_HIGHLIGHT = '\033[42m'
+DELETE_HIGHLIGHT = '\033[41m'
+END_HIGHLIGHT = '\033[0m'

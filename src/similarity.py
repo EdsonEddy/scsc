@@ -25,20 +25,23 @@ def get_tokenized_code(code_string, token_table, withTokenText=False):
     for token in lex(code_string, lexer):
         token_type = token[0]
         if token_type not in IRRELEVANT_TOKENS:
-            token_content = token_table[token_type]
+            token_content = [token_table[token_type]]
             if withTokenText:
                 token_content.append(token[1])
             tokens.append(token_content)
     return tokens
 
-def simple_similarity_checker(file_names, file_contents, threshold):
+def simple_similarity_checker(file_contents):
     token_table = get_token_table()
-    tokenized_file1 = get_tokenized_code(file_contents[0], token_table)
-    tokenized_file2 = get_tokenized_code(file_contents[1], token_table)
+    tokenized_file1 = get_tokenized_code(file_contents[0], token_table, True)
+    tokenized_file2 = get_tokenized_code(file_contents[1], token_table, True)
+    len_a = len(tokenized_file1)
+    len_b = len(tokenized_file2)
     diff = MyersDiff()
-    diff.calculate_diff(tokenized_file1, tokenized_file2)
-    diff_changes = diff.get_changes()
-    
+    edit_distance = diff.calculate_diff(tokenized_file1, tokenized_file2)
+    similarity_percentage = get_similarity_coefficient(edit_distance, len_a, len_b)
+    changes = diff.get_changes()
+    return [changes, similarity_percentage] 
 
 def similarity_grouper(file_names, file_contents, threshold):
     """
