@@ -1,7 +1,6 @@
 from utils import UnionFind
 from utils import get_similarity_coefficient
 from utils import get_token_table
-from utils import myers_diff
 from utils import MyersDiff
 
 from pygments import lex
@@ -57,6 +56,7 @@ def similarity_grouper(file_names, file_contents, threshold):
     """
     file_number = len(file_names)
     uf = UnionFind(file_number)
+    diff = MyersDiff()
 
     token_table = get_token_table()
     tokenized_files = [get_tokenized_code(file, token_table) for file in file_contents]
@@ -69,7 +69,7 @@ def similarity_grouper(file_names, file_contents, threshold):
                 if uf.find(j) == j:
                     seq_b = tokenized_files[j]
                     len_b = len(tokenized_files[j])
-                    edit_distance = myers_diff(seq_a, seq_b)
+                    edit_distance = diff.calculate_fast_diff(seq_a, seq_b)
                     similarity_percentage = get_similarity_coefficient(edit_distance, len_a, len_b)
                     if similarity_percentage > threshold:
                         uf.union(i, j)

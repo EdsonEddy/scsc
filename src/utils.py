@@ -125,39 +125,6 @@ def get_token_table():
         token_table[type_key] = value[0] * value[-1]
     return token_table
 
-def myers_diff(sequence_a, sequence_b):
-    """
-    Calculate the edit distance between two sequences using the Myers diff algorithm.
-    Args:
-        sequence_a (list): The first sequence.
-        sequence_b (list): The second sequence.
-    Returns:
-        int: The minimum cost to transform sequence_a into sequence_b.
-    Description:
-        This function implements the Myers diff algorithm to calculate the edit distance between
-        two sequences. The algorithm uses a linear space complexity and a time complexity of O((N+M)D)
-        where N and M are the lengths of the sequences and D is the edit distance.
-    """
-    len_a = len(sequence_a)
-    len_b = len(sequence_b)
-    max_length = len_a + len_b
-    v = [0] * (2 * max_length + 1)
-    v[1] = 0
-    for d in range(max_length + 1):
-        for k in range(-d, d + 1, 2):
-            if k == -d or (k != d and v[k - 1] < v[k + 1]):
-                x = v[k + 1]
-            else:
-                x = v[k - 1] + 1
-            y = x - k
-            while x < len_a and y < len_b and sequence_a[x][0] == sequence_b[y][0]:
-                x += 1
-                y += 1
-            v[k] = x
-            if x >= len_a and y >= len_b:
-                return d
-    return max_length
-
 class MyersDiff:
     Keep = namedtuple('Keep', ['item'])
     Insert = namedtuple('Insert', ['item'])
@@ -171,6 +138,39 @@ class MyersDiff:
     def compare(self, element_a, element_b):
         # Compare the token identifiers of two elements
         return element_a[0] == element_b[0]
+
+    def calculate_fast_diff(self, sequence_a, sequence_b):
+        """
+        Calculate the edit distance between two sequences using the Myers diff algorithm.
+        Args:
+            sequence_a (list): The first sequence.
+            sequence_b (list): The second sequence.
+        Returns:
+            int: The minimum cost to transform sequence_a into sequence_b.
+        Description:
+            This function implements the Myers diff algorithm to calculate the edit distance between
+            two sequences. The algorithm uses a linear space complexity and a time complexity of O((N+M)D)
+            where N and M are the lengths of the sequences and D is the edit distance.
+        """
+        len_a = len(sequence_a)
+        len_b = len(sequence_b)
+        max_length = len_a + len_b
+        v = [0] * (2 * max_length + 1)
+        v[1] = 0
+        for d in range(max_length + 1):
+            for k in range(-d, d + 1, 2):
+                if k == -d or (k != d and v[k - 1] < v[k + 1]):
+                    x = v[k + 1]
+                else:
+                    x = v[k - 1] + 1
+                y = x - k
+                while x < len_a and y < len_b and self.compare(sequence_a[x], sequence_b[y]):
+                    x += 1
+                    y += 1
+                v[k] = x
+                if x >= len_a and y >= len_b:
+                    return d
+        return max_length
 
     def calculate_diff(self, sequence_a, sequence_b):
         """
