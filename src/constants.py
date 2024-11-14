@@ -29,6 +29,13 @@ IRRELEVANT_TOKENS = {
     # Token.Keyword.Namespace,
 }
 
+TOKENS_WITHOUT_TRANSFORMATION = {
+    Token.Punctuation,
+    Token.Operator,
+    Token.Keyword,
+    # Token.Text.Whitespace,
+}
+
 # Constants for the Myers' Algorithm
 KEEP = 'K'
 ADD = '+'

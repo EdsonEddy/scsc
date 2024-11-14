@@ -6,7 +6,7 @@ from utils import MyersDiff
 from pygments import lex
 from pygments.lexers import guess_lexer
 
-from constants import IRRELEVANT_TOKENS
+from constants import IRRELEVANT_TOKENS, TOKENS_WITHOUT_TRANSFORMATION
 
 def get_tokenized_code(code_string, token_table, withTokenText=False):
     """
@@ -24,7 +24,10 @@ def get_tokenized_code(code_string, token_table, withTokenText=False):
     for token in lex(code_string, lexer):
         token_type = token[0]
         if token_type not in IRRELEVANT_TOKENS:
-            token_content = [token_table[token_type]]
+            if token_type in TOKENS_WITHOUT_TRANSFORMATION:
+                token_content = [token[1]]
+            else:
+                token_content = [token_table[token_type]]
             if withTokenText:
                 token_content.append(token[1])
             tokens.append(token_content)

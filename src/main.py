@@ -33,7 +33,7 @@ def main():
         changes, similarity_percentage = simple_similarity_checker(file_contents)
         print("Changes between the files:")
         print(changes)
-        print(f"Similarity Percentage: {similarity_percentage * 100}%")
+        print(f"Similarity Percentage: {similarity_percentage * 100:.2f}%")
         print(file_names[0])
         print(file_names[1])
     else:
