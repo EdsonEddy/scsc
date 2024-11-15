@@ -2,7 +2,7 @@ from pygments.token import Token
 
 # Constants for filtering irrelevant tokens
 IRRELEVANT_TOKENS = {
-    # Token.Comment,
+    Token.Comment,
     # Token.Comment.Hashbang,
     # Token.Comment.Multiline,
     # Token.Comment.Preproc,
@@ -33,7 +33,7 @@ TOKENS_WITHOUT_TRANSFORMATION = {
     Token.Punctuation,
     Token.Operator,
     Token.Keyword,
-    # Token.Text.Whitespace,
+    Token.Text.Whitespace,
 }
 
 # Constants for the Myers' Algorithm
@@ -42,6 +42,7 @@ ADD = '+'
 DELETE = '-'
 
 # ANSI color codes for terminal output
-ADD_HIGHLIGHT = '\033[42m'
-DELETE_HIGHLIGHT = '\033[41m'
+ADD_HIGHLIGHT = '\033[32m'
+DELETE_HIGHLIGHT = '\033[31m'
 END_HIGHLIGHT = '\033[0m'
+INFO_HIGHLIGHT = '\033[34m'

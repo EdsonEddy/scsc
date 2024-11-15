@@ -218,12 +218,14 @@ class MyersDiff:
         Returns:
             list: A list of strings representing the changes.
         """
-        changes = []
+        changes_with_add = []
+        changes_with_delete = []
         for elem in self.history:
             if isinstance(elem, self.Keep):
-                changes.append(str(elem.item))
+                changes_with_add.append(str(elem.item))
+                changes_with_delete.append(str(elem.item))
             elif isinstance(elem, self.Insert):
-                changes.append(f'{ADD_HIGHLIGHT}{str(elem.item)}{END_HIGHLIGHT}')
+                changes_with_add.append(f'{ADD_HIGHLIGHT}{str(elem.item)}{END_HIGHLIGHT}')
             elif isinstance(elem, self.Remove):
-                changes.append(f'{DELETE_HIGHLIGHT}{str(elem.item)}{END_HIGHLIGHT}')
-        return ''.join(token for token in changes)
+                changes_with_delete.append(f'{DELETE_HIGHLIGHT}{str(elem.item)}{END_HIGHLIGHT}')
+        return ''.join(token for token in changes_with_add), ''.join(token for token in changes_with_delete)

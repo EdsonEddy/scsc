@@ -42,8 +42,8 @@ def simple_similarity_checker(file_contents):
     diff = MyersDiff()
     edit_distance = diff.calculate_diff(tokenized_file1, tokenized_file2)
     similarity_percentage = get_similarity_coefficient(edit_distance, len_a, len_b)
-    changes = diff.get_changes()
-    return [changes, similarity_percentage] 
+    changes_with_add, changes_with_delete = diff.get_changes()
+    return changes_with_add, changes_with_delete, similarity_percentage
 
 def similarity_grouper(file_names, file_contents, threshold):
     """
