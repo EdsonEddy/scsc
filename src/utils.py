@@ -84,45 +84,16 @@ def get_similarity_coefficient(edit_distance, len_seq_a, len_seq_b):
     """
     return (1 - edit_distance / (len_seq_a + len_seq_b))
 
-def get_primes_array(n):
-    """
-    Generate an array of prime numbers up to n.
-    Args:
-        n (int): The upper limit for generating prime numbers.
-    Returns:
-        list: A list of prime numbers up to n.
-    """
-    primes = []
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, n + 1):
-        if is_prime[i]:
-            primes.append(i)
-            for j in range(i * i, n + 1, i):
-                is_prime[j] = False
-    return primes
-
 def get_token_table():
     """
-    Generates a token table mapping type keys to their corresponding index values.
-    This function iterates over the keys in the STANDARD_TYPES dictionary, splits each key
-    by periods, and assigns an index to each unique key part. It then creates a token table
-    where each type key is mapped to a tuple containing the index of the first and last part
-    of the key.
+    Create a token table for the standard token types.
     Returns:
-        dict: A dictionary where each key is a type key from STANDARD_TYPES and each value
-              is a tuple of two integers representing the index of the first and last part
-              of the key.
+        dict: A dictionary mapping token types to unique integer identifiers.
     """
-    type_indexes = {}
     token_table = {}
-    # Only generate primes up to 1000, as the number of token types is less than 1000
-    primes_array = get_primes_array(1000)
     
     for type_key in STANDARD_TYPES.keys():
-        keys = str(type_key).split(".")
-        value = [type_indexes.setdefault(key, primes_array[len(type_indexes)]) for key in keys]
-        token_table[type_key] = value[0] * value[-1]
+        token_table[type_key] = len(token_table)
     return token_table
 
 class MyersDiff:
