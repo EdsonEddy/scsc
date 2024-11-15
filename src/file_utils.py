@@ -21,7 +21,7 @@ def process_files(args):
         # Check if the path is a valid directory
         if not os.path.isdir(path):
             print(f"Error: The path '{path}' is not a valid directory.")
-            return
+            return file_names, file_contents
         
         # Process the files in the directory
         if args.recursive:

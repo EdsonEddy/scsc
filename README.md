@@ -15,8 +15,6 @@ PySimChecker is a tool designed to detect similarity between source codes, even 
 
 ## Installation
 
-No additional dependencies are required. You only need to have Python installed on your system.
-
 1. Clone the repository:
     ```sh
     git clone https://github.com/your-username/pysimchecker.git
@@ -36,7 +34,6 @@ No additional dependencies are required. You only need to have Python installed 
 - `--files`, `-f`: Specific input files to compare.
 - `--recursive`, `-r`: Recursively search through directories.
 - `--threshold`, `-t`: Similarity threshold (default: 0.75, range: 0.0 - 1.0).
-- `--window-percentage`, `-w`: Window percentage (default: 1.0, range: 0.0 - 1.0).
 
 ## Usage
 
@@ -55,11 +52,6 @@ pysimchecker --path /path/to/directory --recursive
 ### Adjust the Similarity Threshold
 ```sh
 pysimchecker --path /path/to/directory --threshold 0.8
-```
-
-### Adjust the Window Percentage
-```sh
-pysimchecker --path /path/to/directory --window-percentage 0.5
 ```
 
 ## Contributing
