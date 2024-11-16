@@ -33,7 +33,7 @@ TOKENS_WITHOUT_TRANSFORMATION = {
     Token.Punctuation,
     Token.Operator,
     Token.Keyword,
-    Token.Text.Whitespace,
+    # Token.Text.Whitespace,
 }
 
 # Constants for the Myers' Algorithm
@@ -42,7 +42,7 @@ ADD = '+'
 DELETE = '-'
 
 # ANSI color codes for terminal output
-ADD_HIGHLIGHT = '\033[32m'
-DELETE_HIGHLIGHT = '\033[31m'
+ADD_HIGHLIGHT = '\033[42m'
+DELETE_HIGHLIGHT = '\033[41m'
 END_HIGHLIGHT = '\033[0m'
-INFO_HIGHLIGHT = '\033[34m'
+INFO_HIGHLIGHT = '\033[33m'

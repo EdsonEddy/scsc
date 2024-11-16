@@ -33,15 +33,13 @@ def main():
     if args.files:
         changes_with_add, changes_with_delete, similarity_percentage = simple_similarity_checker(file_contents)
         output = (
-            "Changes between the files:\n"
+            f"{INFO_HIGHLIGHT}Changes between the files:\n{END_HIGHLIGHT}"
             f"{changes_with_delete}\n"
-            "====================================\n"
+            f"{INFO_HIGHLIGHT}--\n{END_HIGHLIGHT}"
             f"{changes_with_add}\n"
-            f"Similarity Percentage: {similarity_percentage * 100:.2f}%\n"
-            f"{file_names[0]}\n"
-            f"{file_names[1]}"
+            f"{INFO_HIGHLIGHT}Similarity Percentage: {similarity_percentage * 100:.2f}%{END_HIGHLIGHT}"
         )
-        print(output)
+        print(output, end='')
     else:
         if len(file_names) > 1:
             # Group the files based on similarity
