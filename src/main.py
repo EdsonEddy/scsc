@@ -3,7 +3,7 @@ from file_utils import process_files
 from similarity import similarity_grouper
 from similarity import simple_similarity_checker
 from utils import *
-from constants import INFO_HIGHLIGHT, END_HIGHLIGHT
+from constants import INFO_TEXT_COLOR, END_COLOR
 
 def main():
     # Create the argument parser
@@ -32,14 +32,15 @@ def main():
 
     if args.files:
         changes_with_add, changes_with_delete, similarity_percentage = simple_similarity_checker(file_contents)
+        separator = '-' * 80
         output = (
-            f"{INFO_HIGHLIGHT}Changes between the files:\n{END_HIGHLIGHT}"
+            f"{INFO_TEXT_COLOR}Changes between the files:\n{END_COLOR}"
             f"{changes_with_delete}\n"
-            f"{INFO_HIGHLIGHT}--\n{END_HIGHLIGHT}"
+            f"{INFO_TEXT_COLOR}{separator}\n{END_COLOR}"
             f"{changes_with_add}\n"
-            f"{INFO_HIGHLIGHT}Similarity Percentage: {similarity_percentage * 100:.2f}%{END_HIGHLIGHT}"
+            f"{INFO_TEXT_COLOR}Similarity Percentage: {similarity_percentage * 100:.2f}%{END_COLOR}"
         )
-        print(output, end='')
+        print(output)
     else:
         if len(file_names) > 1:
             # Group the files based on similarity

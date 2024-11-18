@@ -2,7 +2,7 @@ import argparse
 from pathlib import Path
 from pygments.token import STANDARD_TYPES
 from collections import namedtuple
-from constants import ADD_HIGHLIGHT, DELETE_HIGHLIGHT, END_HIGHLIGHT
+from constants import ADD_HIGHLIGHT_COLOR, DELETE_HIGHLIGHT_COLOR, END_COLOR
 
 # Utility functions for argument parsing
 def get_file(file_path):
@@ -225,7 +225,7 @@ class MyersDiff:
                 changes_with_add.append(str(elem.item))
                 changes_with_delete.append(str(elem.item))
             elif isinstance(elem, self.Insert):
-                changes_with_add.append(f'{ADD_HIGHLIGHT}{str(elem.item)}{END_HIGHLIGHT}')
+                changes_with_add.append(f'{ADD_HIGHLIGHT_COLOR}{str(elem.item)}{END_COLOR}')
             elif isinstance(elem, self.Remove):
-                changes_with_delete.append(f'{DELETE_HIGHLIGHT}{str(elem.item)}{END_HIGHLIGHT}')
+                changes_with_delete.append(f'{DELETE_HIGHLIGHT_COLOR}{str(elem.item)}{END_COLOR}')
         return ''.join(token for token in changes_with_add), ''.join(token for token in changes_with_delete)

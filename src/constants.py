@@ -33,7 +33,7 @@ TOKENS_WITHOUT_TRANSFORMATION = {
     Token.Punctuation,
     Token.Operator,
     Token.Keyword,
-    # Token.Text.Whitespace,
+    Token.Text.Whitespace,
 }
 
 # Constants for the Myers' Algorithm
@@ -41,8 +41,16 @@ KEEP = 'K'
 ADD = '+'
 DELETE = '-'
 
-# ANSI color codes for terminal output
-ADD_HIGHLIGHT = '\033[42m'
-DELETE_HIGHLIGHT = '\033[41m'
-END_HIGHLIGHT = '\033[0m'
-INFO_HIGHLIGHT = '\033[33m'
+"""
+ANSI escape codes for text formatting in the terminal.
+Reference: https://en.wikipedia.org/wiki/ANSI_escape_code
+"""
+# highlight colors
+ADD_HIGHLIGHT_COLOR = '\033[42m'
+DELETE_HIGHLIGHT_COLOR = '\033[41m'
+END_COLOR = '\033[0m'
+
+# text colors
+ADD_TEXT_COLOR = '\033[32m'
+DELETE_TEXT_COLOR = '\033[31m'
+INFO_TEXT_COLOR = '\033[33m'
