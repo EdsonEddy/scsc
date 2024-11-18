@@ -44,19 +44,22 @@ def main():
     else:
         if len(file_names) > 1:
             # Group the files based on similarity
-            groups = similarity_grouper(file_names, file_contents, args.threshold)
+            groups, percentage_groups = similarity_grouper(file_names, file_contents, args.threshold)
             unique_files = []
+
             # Display the grouped files
-            for file_group in groups:
+            for file_group, per_group in zip(groups, percentage_groups):
                 if len(file_group) > 1:
-                    print("Files that are similar")
-                    for file in file_group:
-                        print(file)
+                    print(f"Files that are similar with {file_group[0]}")
+                    for file, percentage in zip(file_group[1:], per_group[1:]):
+                        print(f"{file} with similarity percentage: {percentage * 100:.2f}")
                 else:
                     unique_files.append(file_group[0])
-            if len(unique_files) > 0:
+
+            # Display unique files
+            if unique_files:
                 for file in unique_files:
-                    print("File that is unique", file)
+                    print(f"File that is unique: {file}")
         else:
             print("No files to compare.")
 

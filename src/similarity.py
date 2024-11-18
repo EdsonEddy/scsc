@@ -63,6 +63,7 @@ def similarity_grouper(file_names, file_contents, threshold):
 
     token_table = get_token_table()
     tokenized_files = [get_tokenized_code(file, token_table) for file in file_contents]
+    percentage_file = [0.00] * file_number
 
     for i in range(file_number - 1):
         if uf.find(i) == i:
@@ -76,12 +77,17 @@ def similarity_grouper(file_names, file_contents, threshold):
                     similarity_percentage = get_similarity_coefficient(edit_distance, len_a, len_b)
                     if similarity_percentage > threshold:
                         uf.union(i, j)
-
+                        percentage_file[j] = similarity_percentage
+    
     groups = {}
+    percentage_groups = {}
     for i in range(file_number):
         root = uf.find(i)
         if root not in groups:
             groups[root] = []
         groups[root].append(file_names[i])
+        if root not in percentage_groups:
+            percentage_groups[root] = []
+        percentage_groups[root].append(percentage_file[i])
 
-    return list(groups.values())
+    return list(groups.values()), list(percentage_groups.values())
