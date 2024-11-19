@@ -32,7 +32,7 @@ def main():
 
     if args.files:
         changes_with_add, changes_with_delete, similarity_percentage = simple_similarity_checker(file_contents)
-        separator = '-' * 80
+        separator = '---'
         output = (
             f"{changes_with_delete}\n"
             f"{separator}\n"
@@ -45,13 +45,14 @@ def main():
             # Group the files based on similarity
             groups, percentage_groups = similarity_grouper(file_names, file_contents, args.threshold)
             unique_files = []
+            tabulation = "   "
 
             # Display the grouped files
             for file_group, per_group in zip(groups, percentage_groups):
                 if len(file_group) > 1:
                     print(f"{DELETE_TEXT_COLOR}Files that are similar with {file_group[0]}{END_COLOR}")
                     for file, percentage in zip(file_group[1:], per_group[1:]):
-                        print(f"{file} with similarity percentage: {percentage * 100:.2f}%")
+                        print(f"{tabulation}{file} with similarity percentage: {percentage * 100:.2f}%")
                 else:
                     unique_files.append(file_group[0])
 

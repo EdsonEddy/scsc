@@ -53,6 +53,47 @@ pysimchecker --path /path/to/directory --recursive
 ```sh
 pysimchecker --path /path/to/directory --threshold 0.8
 ```
+## Output Explanation
+
+### Option `-f` (Specific Files)
+
+When using the `-f` option to compare specific files, PySimChecker generates an output that includes the changes needed to transform one file into another, as well as the similarity percentage between the files. The output has the following format:
+
+```sh
+pysimchecker --files file1.py file2.py
+```
+
+**Output:**
+```sh
+[DELETE] Code removed from file1.py
+---
+[ADD] Code added to file2.py
+Similarity Percentage: XX.XX%
+```
+
+- **[DELETE]:** Shows the code that was removed from the first file `(file1.py)`. This text will be highlighted in red.
+- **[ADD]:** Shows the code that was added to the second file `(file2.py)`. This text will be highlighted in green.
+- **Similarity Percentage:** Indicates the percentage of similarity between the two files.
+
+### Option `-p` (Specific Files)
+
+When using the `-p` option to analyze an entire directory, PySimChecker groups the files based on their similarity and displays unique files and groups of similar files. The output has the following format:
+
+```sh
+pysimchecker --path /path/to/directory
+```
+
+**Output:**
+```sh
+Files that are similar with file1.py
+   file2.py with similarity percentage: XX.XX%
+   file3.py with similarity percentage: XX.XX%
+File that is unique: file4.py
+File that is unique: file5.py
+```
+
+- **Files that are similar with:** Shows the files that are similar to the main file `(file1.py)`, along with the similarity percentage. This text will be colored in red.
+- **File that is unique:** Shows the files that do not have significant similarity with other files in the directory. This text will be colored in green.
 
 ## Contributing
 
