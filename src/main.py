@@ -3,7 +3,7 @@ from file_utils import process_files
 from similarity import similarity_grouper
 from similarity import simple_similarity_checker
 from utils import *
-from constants import INFO_TEXT_COLOR, END_COLOR
+from constants import END_COLOR, DELETE_TEXT_COLOR, ADD_TEXT_COLOR
 
 def main():
     # Create the argument parser
@@ -34,11 +34,10 @@ def main():
         changes_with_add, changes_with_delete, similarity_percentage = simple_similarity_checker(file_contents)
         separator = '-' * 80
         output = (
-            f"{INFO_TEXT_COLOR}Changes between the files:\n{END_COLOR}"
             f"{changes_with_delete}\n"
-            f"{INFO_TEXT_COLOR}{separator}\n{END_COLOR}"
+            f"{separator}\n"
             f"{changes_with_add}\n"
-            f"{INFO_TEXT_COLOR}Similarity Percentage: {similarity_percentage * 100:.2f}%{END_COLOR}"
+            f"Similarity Percentage: {similarity_percentage * 100:.2f}%"
         )
         print(output)
     else:
@@ -50,16 +49,16 @@ def main():
             # Display the grouped files
             for file_group, per_group in zip(groups, percentage_groups):
                 if len(file_group) > 1:
-                    print(f"Files that are similar with {file_group[0]}")
+                    print(f"{DELETE_TEXT_COLOR}Files that are similar with {file_group[0]}{END_COLOR}")
                     for file, percentage in zip(file_group[1:], per_group[1:]):
-                        print(f"{file} with similarity percentage: {percentage * 100:.2f}")
+                        print(f"{file} with similarity percentage: {percentage * 100:.2f}%")
                 else:
                     unique_files.append(file_group[0])
 
             # Display unique files
             if unique_files:
                 for file in unique_files:
-                    print(f"File that is unique: {file}")
+                    print(f"{ADD_TEXT_COLOR}File that is unique: {file}{END_COLOR}")
         else:
             print("No files to compare.")
 
