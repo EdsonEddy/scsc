@@ -5,7 +5,7 @@ setup(
     version="0.1.0",
     package_dir={'': 'src'},
 	py_modules=["main", "file_utils", "similarity", "utils", "constants"],
-        install_requires=[
+    install_requires=[
         "pygments",
     ],
     author="Eddy Lecoña",
