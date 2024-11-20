@@ -24,6 +24,9 @@ def main():
     # Add the 'threshold' argument with range validation (0.0 - 1.0)
     parser.add_argument('--threshold', '-t', type=get_threshold, default=0.75, help='The similarity threshold (default: 0.75, range: 0.0 - 1.0)')
     
+     # Add the 'method' argument
+    parser.add_argument('--method', '-m', type=str, choices=['myers', 'lev'], default='myers', help='The method to use for similarity detection (default: myers)')
+
     # Parse the arguments
     args = parser.parse_args()
     
@@ -31,7 +34,7 @@ def main():
     file_names, file_contents = process_files(args)
 
     if args.files:
-        changes_with_add, changes_with_delete, similarity_percentage = simple_similarity_checker(file_contents)
+        changes_with_add, changes_with_delete, similarity_percentage = simple_similarity_checker(file_contents, args.method)
         separator = '---'
         output = (
             f"{changes_with_delete}\n"
@@ -43,7 +46,7 @@ def main():
     else:
         if len(file_names) > 1:
             # Group the files based on similarity
-            groups, percentage_groups = similarity_grouper(file_names, file_contents, args.threshold)
+            groups, percentage_groups = similarity_grouper(file_names, file_contents, args.threshold, args.method)
             unique_files = []
             tabulation = "   "
 

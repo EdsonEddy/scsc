@@ -16,7 +16,7 @@ Myers' algorithm uses a dynamic programming technique to find the sequence of op
 ```python
 # Example usage of Myers' algorithm
 diff = MyersDiff()
-edit_distance = diff.calculate_diff(sequence_a, sequence_b)
+edit_distance = diff.get_edit_distance(sequence_a, sequence_b)
 changes_with_add, changes_with_delete = diff.get_changes()
 print(f"Edit Distance: {edit_distance}")
 print(f"Changes with additions: {changes_with_add}")

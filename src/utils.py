@@ -72,16 +72,22 @@ class UnionFind:
         """
         return self.find(a) == self.find(b)
     
-def get_similarity_coefficient(edit_distance, len_seq_a, len_seq_b):
+def get_similarity_coefficient(edit_distance, len_seq_a, len_seq_b, method):
     """
     Calculate the similarity percentage between two sequences based on their edit distance.
     Args:
         edit_distance (int): The edit distance between the two sequences.
         len_seq_a (int): The length of the first sequence.
         len_seq_b (int): The length of the second sequence.
+        method (str): The method used for similarity detection.
     Returns:
         float: The similarity percentage between the two sequences.
     """
+    if method == 'myers':
+        return (1 - edit_distance / (len_seq_a + len_seq_b))
+    elif method == 'lev':
+        return (1 - edit_distance / max(len_seq_a, len_seq_b))
+    # Default method is myers
     return (1 - edit_distance / (len_seq_a + len_seq_b))
 
 def get_token_table():
@@ -110,7 +116,7 @@ class MyersDiff:
         # Compare the token identifiers of two elements
         return element_a[0] == element_b[0]
 
-    def calculate_fast_diff(self, sequence_a, sequence_b):
+    def get_fast_edit_distance(self, sequence_a, sequence_b):
         """
         Calculate the edit distance between two sequences using the Myers diff algorithm.
         Args:
@@ -143,7 +149,7 @@ class MyersDiff:
                     return d
         return max_length
 
-    def calculate_diff(self, sequence_a, sequence_b):
+    def get_edit_distance(self, sequence_a, sequence_b):
         """
         Calculate the difference between two sequences.
 
@@ -229,3 +235,56 @@ class MyersDiff:
             elif isinstance(elem, self.Remove):
                 changes_with_delete.append(f'{DELETE_HIGHLIGHT_COLOR}{str(elem.item)}{END_COLOR}')
         return ''.join(token for token in changes_with_add), ''.join(token for token in changes_with_delete)
+
+class Levenshtein:
+
+    def compare(self, element_a, element_b):
+        # Compare the token identifiers of two elements
+        return element_a[0] == element_b[0]
+
+    def get_fast_edit_distance(self, sequence_a, sequence_b):
+        """
+        Calculate the edit distance between two sequences using a window of a specified percentage.
+        Args:
+            sequence_a (list): The first sequence.
+            sequence_b (list): The second sequence.
+                
+        Returns:
+            int: The minimum cost to transform sequence_a into sequence_b.
+        
+        Description:
+            This optimized version of the edit distance algorithm uses a 
+            memory-efficient approach to store only the necessary information.
+        """
+        # Swap the sequences for memory efficiency
+        if len(sequence_b) > len(sequence_a):
+            sequence_a, sequence_b = sequence_b, sequence_a
+
+        len_a = len(sequence_a) + 1
+        len_b = len(sequence_b) + 1
+
+        # Create a dynamic programming table with dimensions 2 x len_b
+        dp = [[0] * len_b for _ in range(2)]
+
+        for i in range(1, len_a):
+            # Swap the rows for the current and previous iterations
+            dp[0], dp[1] = dp[1], dp[0]
+            dp[1][0] = i
+            
+            for j in range(1, len_b):
+                # Calculate the cost of different operations: insert, delete, and replace
+                insert = dp[1][j - 1] + 1
+                delete = dp[0][j] + 1
+                replace = dp[0][j - 1] + (not self.compare(sequence_a[i - 1], sequence_b[j - 1]))
+                
+                # Choose the minimum cost among the three operations
+                dp[1][j] = min(insert, delete, replace)
+
+        # Return the minimum cost to transform sequence_a into sequence_b    
+        return dp[1][len_b - 1]
+    
+    def get_edit_distance(self, sequence_a, sequence_b):
+        return self.get_fast_edit_distance(sequence_a, sequence_b)
+    
+    def get_changes(self):
+        return '', ''
