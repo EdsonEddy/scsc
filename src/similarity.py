@@ -1,53 +1,10 @@
-from utils import UnionFind
-from utils import get_similarity_coefficient
-from utils import get_token_table
-from utils import MyersDiff, Levenshtein
-
-from pygments import lex
-from pygments.lexers import guess_lexer
-
-from constants import IRRELEVANT_TOKENS, TOKENS_WITHOUT_TRANSFORMATION
-
-def get_tokenized_code(code_string, token_table, withTokenText=False):
-    """
-    Tokenizes the given code string and filters out irrelevant tokens.
-
-    Args:
-        code_string (str): The source code as a string.
-
-    Returns:
-        list: A list of relevant token types from the tokenized code.
-    """
-
-    lexer = guess_lexer(code_string)
-    tokens = []
-    for token in lex(code_string, lexer):
-        token_type = token[0]
-        if token_type not in IRRELEVANT_TOKENS:
-            if token_type in TOKENS_WITHOUT_TRANSFORMATION:
-                token_content = [token[1]]
-            else:
-                token_content = [token_table[token_type]]
-            if withTokenText:
-                token_content.append(token[1])
-            tokens.append(token_content)
-    return tokens
-
-def get_method(method):
-    """
-    Returns the method to use for similarity detection.
-    """
-    if method == 'myers':
-        return MyersDiff()
-    elif method == 'lev':
-        return Levenshtein()
-    # Default method is MyersDiff
-    return MyersDiff()
+from utils import UnionFind, Tokenizer, get_method, get_similarity_coefficient
 
 def simple_similarity_checker(file_contents, method):
-    token_table = get_token_table()
-    tokenized_file1 = get_tokenized_code(file_contents[0], token_table, True)
-    tokenized_file2 = get_tokenized_code(file_contents[1], token_table, True)
+    tokenizer = Tokenizer()
+    token_table = tokenizer.get_token_table()
+    tokenized_file1 = tokenizer.get_tokenized_code(file_contents[0], token_table, True)
+    tokenized_file2 = tokenizer.get_tokenized_code(file_contents[1], token_table, True)
     len_a = len(tokenized_file1)
     len_b = len(tokenized_file2)
     similarity_method = get_method(method)
@@ -70,10 +27,11 @@ def similarity_grouper(file_names, file_contents, threshold, method):
     """
     file_number = len(file_names)
     uf = UnionFind(file_number)
+    tokenizer = Tokenizer()
     similarity_method = get_method(method)
 
-    token_table = get_token_table()
-    tokenized_files = [get_tokenized_code(file, token_table) for file in file_contents]
+    token_table = tokenizer.get_token_table()
+    tokenized_files = [tokenizer.get_tokenized_code(file, token_table) for file in file_contents]
     percentage_file = [0.00] * file_number
 
     for i in range(file_number - 1):

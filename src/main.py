@@ -1,8 +1,6 @@
 import argparse
-from file_utils import process_files
-from similarity import similarity_grouper
-from similarity import simple_similarity_checker
-from utils import *
+from file_utils import process_files, get_file, get_threshold
+from similarity import similarity_grouper, simple_similarity_checker
 from constants import END_COLOR, DELETE_TEXT_COLOR, ADD_TEXT_COLOR
 
 def main():

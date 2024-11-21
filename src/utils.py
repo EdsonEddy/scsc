@@ -1,25 +1,41 @@
-import argparse
-from pathlib import Path
-from pygments.token import STANDARD_TYPES
 from collections import namedtuple
-from constants import ADD_HIGHLIGHT_COLOR, DELETE_HIGHLIGHT_COLOR, END_COLOR
+from constants import ADD_HIGHLIGHT_COLOR, DELETE_HIGHLIGHT_COLOR, END_COLOR, IRRELEVANT_TOKENS, TOKENS_WITHOUT_TRANSFORMATION
+from pygments import lex
+from pygments.token import STANDARD_TYPES
+from pygments.lexers import guess_lexer
 
-# Utility functions for argument parsing
-def get_file(file_path):
-    if not Path(file_path).is_file():
-        raise argparse.ArgumentTypeError(f"File '{file_path}' does not exist.")
-    return file_path
+# Utility functions for similarity detection
 
-def get_threshold(value):
-    try:
-        fvalue = float(value)
-    except ValueError:
-        raise argparse.ArgumentTypeError(f"Invalid threshold value: {value}")
-    if fvalue < 0.0 or fvalue > 1.0:
-        raise argparse.ArgumentTypeError(f"Threshold must be between 0.0 and 1.0")
-    return fvalue
+def get_method(method):
+    """
+    Returns the method to use for similarity detection.
+    """
+    if method == 'myers':
+        return MyersDiff()
+    elif method == 'lev':
+        return Levenshtein()
+    # Default method is MyersDiff
+    return MyersDiff()
 
-# Algorithms, Data Structures and utility functions
+def get_similarity_coefficient(edit_distance, len_seq_a, len_seq_b, method):
+    """
+    Calculate the similarity percentage between two sequences based on their edit distance.
+    Args:
+        edit_distance (int): The edit distance between the two sequences.
+        len_seq_a (int): The length of the first sequence.
+        len_seq_b (int): The length of the second sequence.
+        method (str): The method used for similarity detection.
+    Returns:
+        float: The similarity percentage between the two sequences.
+    """
+    if method == 'myers':
+        return (1 - edit_distance / (len_seq_a + len_seq_b))
+    elif method == 'lev':
+        return (1 - edit_distance / max(len_seq_a, len_seq_b))
+    # Default method is myers
+    return (1 - edit_distance / (len_seq_a + len_seq_b))
+
+# Algorithms and Data Structures
 
 class UnionFind:
     def __init__(self, n):
@@ -72,35 +88,43 @@ class UnionFind:
         """
         return self.find(a) == self.find(b)
     
-def get_similarity_coefficient(edit_distance, len_seq_a, len_seq_b, method):
-    """
-    Calculate the similarity percentage between two sequences based on their edit distance.
-    Args:
-        edit_distance (int): The edit distance between the two sequences.
-        len_seq_a (int): The length of the first sequence.
-        len_seq_b (int): The length of the second sequence.
-        method (str): The method used for similarity detection.
-    Returns:
-        float: The similarity percentage between the two sequences.
-    """
-    if method == 'myers':
-        return (1 - edit_distance / (len_seq_a + len_seq_b))
-    elif method == 'lev':
-        return (1 - edit_distance / max(len_seq_a, len_seq_b))
-    # Default method is myers
-    return (1 - edit_distance / (len_seq_a + len_seq_b))
+class Tokenizer:
+    def get_tokenized_code(self, code_string, token_table, withTokenText=False):
+        """
+        Tokenizes the given code string and filters out irrelevant tokens.
 
-def get_token_table():
-    """
-    Create a token table for the standard token types.
-    Returns:
-        dict: A dictionary mapping token types to unique integer identifiers.
-    """
-    token_table = {}
+        Args:
+            code_string (str): The source code as a string.
+
+        Returns:
+            list: A list of relevant token types from the tokenized code.
+        """
+
+        lexer = guess_lexer(code_string)
+        tokens = []
+        for token in lex(code_string, lexer):
+            token_type = token[0]
+            if token_type not in IRRELEVANT_TOKENS:
+                if token_type in TOKENS_WITHOUT_TRANSFORMATION:
+                    token_content = [token[1]]
+                else:
+                    token_content = [token_table[token_type]]
+                if withTokenText:
+                    token_content.append(token[1])
+                tokens.append(token_content)
+        return tokens
     
-    for type_key in STANDARD_TYPES.keys():
-        token_table[type_key] = len(token_table)
-    return token_table
+    def get_token_table(self):
+        """
+        Create a token table for the standard token types.
+        Returns:
+            dict: A dictionary mapping token types to unique integer identifiers.
+        """
+        token_table = {}
+        
+        for type_key in STANDARD_TYPES.keys():
+            token_table[type_key] = len(token_table)
+        return token_table
 
 class MyersDiff:
     Keep = namedtuple('Keep', ['item'])
@@ -284,7 +308,9 @@ class Levenshtein:
         return dp[1][len_b - 1]
     
     def get_edit_distance(self, sequence_a, sequence_b):
+        # TODO: Implement the Levenshtein edit distance algorithm
         return self.get_fast_edit_distance(sequence_a, sequence_b)
     
     def get_changes(self):
+        # TODO: Implement the method to get the changes between two sequences
         return '', ''
