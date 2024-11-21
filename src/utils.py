@@ -3,6 +3,7 @@ from constants import ADD_HIGHLIGHT_COLOR, DELETE_HIGHLIGHT_COLOR, END_COLOR, IR
 from pygments import lex
 from pygments.token import STANDARD_TYPES
 from pygments.lexers import guess_lexer
+from abc import ABC, abstractmethod
 
 # Utility functions for similarity detection
 
@@ -126,7 +127,27 @@ class Tokenizer:
             token_table[type_key] = len(token_table)
         return token_table
 
-class MyersDiff:
+# Define the abstract base class
+class SimilarityAlgorithm(ABC):
+
+    def compare(self, element_a, element_b):
+        return element_a[0] == element_b[0]
+
+    @abstractmethod
+    def get_fast_edit_distance(self, sequence_a, sequence_b):
+        pass
+
+    @abstractmethod
+    def get_edit_distance(self, sequence_a, sequence_b):
+        pass
+
+    @abstractmethod
+    def get_changes(self):
+        pass
+
+
+# MyersDiff inherits from SimilarityAlgorithm
+class MyersDiff(SimilarityAlgorithm):
     Keep = namedtuple('Keep', ['item'])
     Insert = namedtuple('Insert', ['item'])
     Remove = namedtuple('Remove', ['item'])
@@ -135,10 +156,6 @@ class MyersDiff:
     def __init__(self):
         self.frontier = {}
         self.history = []
-
-    def compare(self, element_a, element_b):
-        # Compare the token identifiers of two elements
-        return element_a[0] == element_b[0]
 
     def get_fast_edit_distance(self, sequence_a, sequence_b):
         """
@@ -260,11 +277,8 @@ class MyersDiff:
                 changes_with_delete.append(f'{DELETE_HIGHLIGHT_COLOR}{str(elem.item)}{END_COLOR}')
         return ''.join(token for token in changes_with_add), ''.join(token for token in changes_with_delete)
 
-class Levenshtein:
-
-    def compare(self, element_a, element_b):
-        # Compare the token identifiers of two elements
-        return element_a[0] == element_b[0]
+# Levenshtein inherits from SimilarityAlgorithm
+class Levenshtein(SimilarityAlgorithm):
 
     def get_fast_edit_distance(self, sequence_a, sequence_b):
         """
