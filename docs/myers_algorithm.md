@@ -10,15 +10,3 @@ Myers' algorithm uses a dynamic programming technique to find the sequence of op
 
 - **Time:** O((N+M)D), where N and M are the lengths of the sequences and D is the edit distance.
 - **Space:** O(N+M), due to the use of a vector to store the furthest reaching points in the edit graph.
-
-### Example Usage
-
-```python
-# Example usage of Myers' algorithm
-diff = MyersDiff()
-edit_distance = diff.get_edit_distance(sequence_a, sequence_b)
-changes_with_add, changes_with_delete = diff.get_changes()
-print(f"Edit Distance: {edit_distance}")
-print(f"Changes with additions: {changes_with_add}")
-print(f"Changes with deletions: {changes_with_delete}")
-```
