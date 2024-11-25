@@ -2,11 +2,12 @@ from setuptools import setup
 
 setup(
     name="pysimchecker",
-    version="0.1.0",
+    version="1.0.0",
     package_dir={'': 'src'},
-	py_modules=["main", "file_utils", "similarity", "utils", "constants"],
+	py_modules=["code_preprocessor", "constants", "file_utils", "main", "pycode_similar", "pysimchecker", "similarity", "union_find"],
     install_requires=[
         "pygments",
+        "zss",
     ],
     author="Eddy Lecoña",
     author_email="crew0eddy@gmail.com",
@@ -18,7 +19,7 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
     ],
     keywords="code analysis, similarity detection, plagiarism detection, code snippets, code comparison",

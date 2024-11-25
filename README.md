@@ -34,7 +34,8 @@ PySimChecker is a tool designed to detect similarity between source codes, even 
 - `--files`, `-f`: Specific input files to compare.
 - `--recursive`, `-r`: Recursively search through directories.
 - `--threshold`, `-t`: Similarity threshold (default: 0.75, range: 0.0 - 1.0).
-- `--method`, `-m`: The method to use for similarity detection. Options are `myers` or `lev` (default: myers).
+- `--method`, `-m`: The method to use for similarity detection. Options are `pysimchecker` or `pycode_similar` (default: pysimchecker).
+- `--verbose`, `-v`: Verbose output.
 
 ## Usage
 
@@ -55,14 +56,14 @@ pysimchecker --path /path/to/directory --recursive
 pysimchecker --path /path/to/directory --threshold 0.8
 ```
 
-### Using the `lev` Method
+### Using the `pycode_similar` Method
 ```sh
-pysimchecker --path /path/to/directory --method lev
+pysimchecker --path /path/to/directory --method pycode_similar
 ```
 
-### Using the `myers` Method
+### Using the `pysimchecker` Method
 ```sh
-pysimchecker --path /path/to/directory --method myers
+pysimchecker --path /path/to/directory --method pysimchecker
 ```
 
 ## Output Explanation
