@@ -1,14 +1,17 @@
-from union_find import UnionFind
-from code_preprocessor import CodePreprocessor
-from pysimchecker import PySimChecker
-from pycode_similar import PyCodeSimilar
-from constants import END_COLOR, DELETE_TEXT_COLOR, ADD_TEXT_COLOR
+from .union_find import UnionFind
+from .code_preprocessor import CodePreprocessor
+from .pysimchecker import PySimChecker
+from .pycode_similar import PyCodeSimilar
+from .locmoss import Locmoss
+from .constants import END_COLOR, DELETE_TEXT_COLOR, ADD_TEXT_COLOR
 
 def get_similarity_method(method, verbose):
     if method == 'pycode_similar':
         return PyCodeSimilar(verbose)
     elif method == 'pysimchecker':
         return PySimChecker(verbose)
+    elif method == 'locmoss':
+        return Locmoss(verbose)
     # Default method is PySimChecker
     return PySimChecker(verbose)
 
@@ -46,7 +49,7 @@ def similarity_checker(file_names, file_contents, threshold, method, verbose):
     processor = CodePreprocessor(method)
     similarity_method = get_similarity_method(method, verbose)
 
-    proccesed_files = [processor.preprocess_code(file) for file in file_contents]
+    proccesed_files = [processor.preprocess_code(file_content, file_name) for file_content, file_name in zip(file_contents, file_names)]
     percentage_file = [0.00] * file_number
     verbose_file = [""] * file_number
 

@@ -1,10 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="pysimchecker",
-    version="1.0.0",
-    package_dir={'': 'src'},
-	py_modules=["code_preprocessor", "constants", "file_utils", "main", "pycode_similar", "pysimchecker", "similarity", "union_find"],
+    version="1.1.0",
+    packages=find_packages(),
     install_requires=[
         "pygments",
         "zss",
@@ -29,10 +28,10 @@ setup(
         "Source Code": "https://github.com/EdsonEddy/pysimchecker",
     },
     python_requires='>=3.9',
-	platforms=["All"],
+    platforms=["All"],
     entry_points={
         'console_scripts': [
-            'pysimchecker=main:main',
+            'pysimchecker=pysimchecker.main:main',
         ],
     },
 )

@@ -1,5 +1,5 @@
 from collections import namedtuple
-from constants import ADD_HIGHLIGHT_COLOR, DELETE_HIGHLIGHT_COLOR, END_COLOR
+from .constants import ADD_HIGHLIGHT_COLOR, DELETE_HIGHLIGHT_COLOR, END_COLOR
 
 class PySimChecker():
     Keep = namedtuple('Keep', ['item'])

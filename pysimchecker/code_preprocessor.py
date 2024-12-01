@@ -1,7 +1,8 @@
-from constants import IRRELEVANT_TOKENS, TOKENS_WITHOUT_TRANSFORMATION
+from .constants import IRRELEVANT_TOKENS, TOKENS_WITHOUT_TRANSFORMATION
 from pygments import lex
 from pygments.token import STANDARD_TYPES
 from pygments.lexers import guess_lexer
+import os
 
 # Code Preprocessor, includes methods for preprocessing code
 class CodePreprocessor:
@@ -44,11 +45,16 @@ class CodePreprocessor:
         
         return tokens
     
-    def preprocess_code(self, code_string):
+    def get_complete_path(self, file_name):
+        return os.path.abspath(file_name)
+    
+    def preprocess_code(self, code_string, file_name):
         if self.method == 'pycode_similar':
             return self.add_main(code_string)
         elif self.method == 'pysimchecker':
             return self.tokenize_code(code_string)
+        elif self.method == 'locmoss':
+            return self.get_complete_path(file_name)
         
         # Default method return the same code
         return code_string
