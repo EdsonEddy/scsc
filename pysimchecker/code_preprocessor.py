@@ -37,7 +37,8 @@ class CodePreprocessor:
             token_type = token[0]
             token_str = token[1]
             if token_type not in IRRELEVANT_TOKENS:
-                if token_type in TOKENS_WITHOUT_TRANSFORMATION:
+                # TODO: the token table should be created based on the tokens found in the code
+                if token_type in TOKENS_WITHOUT_TRANSFORMATION or not token_type in self.token_table:
                     token_content = [token_str, token_str]
                 else:
                     token_content = [self.token_table[token_type], token_str]
