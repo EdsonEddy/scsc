@@ -132,3 +132,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [Repository](https://github.com/EdsonEddy/pysimchecker)
 - [Documentation](https://github.com/EdsonEddy/pysimchecker/wiki)
 - [Report a Bug](https://github.com/EdsonEddy/pysimchecker/issues)
+
+## Third-Party Licenses
+
+This project includes the file `locmoss.py` which is under the BSD 3-Clause License. The copyright notice and the full license can be found at the top of the `locmoss.py` file.

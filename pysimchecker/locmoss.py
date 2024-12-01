@@ -1,3 +1,38 @@
+# Original author: Jean-Michel Begon
+# Original repository: https://github.com/jean-michel-begon/locmoss
+
+"""
+BSD 3-Clause License
+
+Copyright (c) 2020, Jean-Michel Begon
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+"""
+
 # File query.py
 import os
 from datetime import datetime, timedelta
@@ -1193,6 +1228,7 @@ class Software(object):
     # def list_from_globs(cls, patterns, realpath=False):
     #     tree = Tree.from_glob_pattern(patterns, realpath)
     #     return list(tree.to_software())
+    
     # changes this method to accept a list of files
     def list_from_globs(cls, patterns, realpath=False):
         files = []
@@ -1448,18 +1484,21 @@ if __name__ == '__main__':
         print(" ".join(sys.argv))
         # TODO shorten the paths stuff
 
+# Implemtation of the Locmoss class
 class Locmoss:
+    # TODO: Add the verbose argument in the Mossengine
     def __init__(self, verbose):
         self.verbose = verbose
     
     # TODO: Implement the function
     def get_extra_info(self):
         return ""
-    
+
+    # Function to calculate the similarity coefficient between two pieces of code using the Locmoss algorithm.
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
         
         similarity_coefficient = 0.0
-        
+        # arguments for the Locmoss algorithm
         args = {
             "paths": [proccesed_code1, proccesed_code2],
             "language": None,
@@ -1469,6 +1508,7 @@ class Locmoss:
             "top": 15,
         }
 
+        # calculating the similarity coefficient, jaccard similarity
         parser_factory = select_parser_factory(args["language"])
         fingerprinter = Winnower(parser_factory, args["window_size"], args["kgram_len"])
         filter = Filter(args["collision_threshold"])
