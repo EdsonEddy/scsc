@@ -55,6 +55,8 @@ class CodePreprocessor:
             return self.tokenize_code(code_string)
         elif self.method == 'locmoss':
             return self.get_complete_path(file_name)
+        elif self.method == 'codesight':
+            return self.get_complete_path(file_name)
         
         # Default method return the same code
         return code_string

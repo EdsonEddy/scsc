@@ -34,7 +34,7 @@ PySimChecker is a tool designed to detect similarity between source codes, even 
 - `--files`, `-f`: Specific input files to compare.
 - `--recursive`, `-r`: Recursively search through directories.
 - `--threshold`, `-t`: Similarity threshold (default: 0.75, range: 0.0 - 1.0).
-- `--method`, `-m`: The method to use for similarity detection. Options are `pysimchecker` or `pycode_similar` (default: pysimchecker).
+- `--method`, `-m`: The method to use for similarity detection. Options are `pysimchecker`, `pycode_similar`, `locmoss` and `codesight` (default: pysimchecker).
 - `--verbose`, `-v`: Verbose output.
 
 ## Usage
@@ -44,6 +44,11 @@ PySimChecker can be used from the command line. Here are some usage examples:
 ### Compare Specific Files
 ```sh
 pysimchecker --files file1.py file2.py
+```
+
+### Compare Specific Directory
+```sh
+pysimchecker --path /path/to/directory
 ```
 
 ### Analyze an Entire Directory
@@ -135,6 +140,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Third-Party Licenses
 
-This project includes the file `locmoss.py` which is under the BSD 3-Clause License. The copyright notice and the full license can be found at the top of the `locmoss.py` file.
-
-`pycode_similar.py` which is under the MIT License. The copyright notice and the full license can be found at the top of the `pycode_similar.py` file.
+This project includes `locmoss.py` (BSD 3-Clause License) and `pycode_similar.py` (MIT License). Full licenses are at the top of each file. Additionally, `codesight.py` does not have a license in its repository.

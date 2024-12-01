@@ -3,6 +3,7 @@ from .code_preprocessor import CodePreprocessor
 from .pysimchecker import PySimChecker
 from .pycode_similar import PyCodeSimilar
 from .locmoss import Locmoss
+from .codesight import Codesight
 from .constants import END_COLOR, DELETE_TEXT_COLOR, ADD_TEXT_COLOR
 
 def get_similarity_method(method, verbose):
@@ -12,6 +13,8 @@ def get_similarity_method(method, verbose):
         return PySimChecker(verbose)
     elif method == 'locmoss':
         return Locmoss(verbose)
+    elif method == 'codesight':
+        return Codesight(verbose)
     # Default method is PySimChecker
     return PySimChecker(verbose)
 
