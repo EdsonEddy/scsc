@@ -136,3 +136,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Third-Party Licenses
 
 This project includes the file `locmoss.py` which is under the BSD 3-Clause License. The copyright notice and the full license can be found at the top of the `locmoss.py` file.
+
+`pycode_similar.py` which is under the MIT License. The copyright notice and the full license can be found at the top of the `pycode_similar.py` file.
