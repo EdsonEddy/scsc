@@ -444,15 +444,20 @@ class Codesight:
     
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
         similarity_coefficient = 0.0
+
+        # arguments for the codesight method
+        args = {
+            "Threshold": 10,
+        }
+
         SignatureA = Signature(proccesed_code1)
         SignatureB = Signature(proccesed_code2)
-        Threshold = 10
 
         # greedyStringTiling
         A = SignatureA.getTokenData()
         B = SignatureB.getTokenData()
-        matches = Match(SignatureA, SignatureB, A, B, Threshold)
-        maxmatch = Threshold
+        matches = Match(SignatureA, SignatureB, A, B, args["Threshold"])
+        maxmatch = args["Threshold"]
         for a in range(SignatureA.getNumTokens()):
             for b in range(SignatureB.getNumTokens()):
                 j = 0

@@ -1496,13 +1496,13 @@ class Locmoss:
 
     # Function to calculate the similarity coefficient between two pieces of code using the Locmoss algorithm.
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
-        
         similarity_coefficient = 0.0
-        # arguments for the Locmoss algorithm
+
+        # arguments for the Locmoss method
         args = {
             "paths": [proccesed_code1, proccesed_code2],
             "language": None,
-            "collision_threshold": 100,
+            "collision_threshold": 10,
             "window_size": 15,
             "kgram_len": 5,
             "top": 15,

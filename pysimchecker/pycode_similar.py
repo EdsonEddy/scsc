@@ -703,14 +703,23 @@ class PyCodeSimilar:
         return ""
     
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
-        pycode_list = [(name, content) for name, content in enumerate([proccesed_code1, proccesed_code2])]
         similarity_coefficient = 0.0
+        pycode_list = [(name, content) for name, content in enumerate([proccesed_code1, proccesed_code2])]
+
+        # Arguments for the pycode_similar method
+        args = {
+            'files': pycode_list,
+            'keep_prints': False,
+            'module_level': False,
+            'continue_on_error': False
+        }
+
         try:
             results = detect(
-                [c[1] for c in pycode_list],
-                keep_prints=False,
-                module_level=False,
-                continue_on_error=False
+                [c[1] for c in args["files"]],
+                keep_prints=args["keep_prints"],
+                module_level=args["module_level"],
+                continue_on_error=args["continue_on_error"]
             )
             
             for _, func_ast_diff_list in results:
