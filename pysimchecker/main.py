@@ -39,6 +39,9 @@ def main():
     # Add the 'verbose' argument
     parser.add_argument('--verbose', '-v', action='store_true', help='Display verbose output')
 
+    # Add the full comparison argument
+    parser.add_argument('--full-comparison', '-fc', type=str, help='Compare each file with every other file and output the results to the specified CSV file')
+
     # Parse the arguments
     args = parser.parse_args()
     
@@ -46,7 +49,7 @@ def main():
     file_names, file_contents = process_files(args)
 
     if len(file_names) > 1:
-        results = similarity_checker(file_names, file_contents, args.threshold, args.method, args.verbose)
+        results = similarity_checker(file_names, file_contents, args.threshold, args.method, args.verbose, args.full_comparison)
         print(results)
     else:
         print("No files to compare.")

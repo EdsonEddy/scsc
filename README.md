@@ -36,6 +36,8 @@ PySimChecker is a tool designed to detect similarity between source codes, even 
 - `--threshold`, `-t`: Similarity threshold (default: 0.75, range: 0.0 - 1.0).
 - `--method`, `-m`: The method to use for similarity detection. Options are `pysimchecker`, `pycode_similar`, `locmoss` and `codesight` (default: pysimchecker).
 - `--verbose`, `-v`: Verbose output.
+- `--full-comparison`, `-fc`: Compare each file with every other file and output the results to the specified CSV file.
+
 
 ## Usage
 
@@ -69,6 +71,11 @@ pysimchecker --path /path/to/directory --method pycode_similar
 ### Using the `pysimchecker` Method
 ```sh
 pysimchecker --path /path/to/directory --method pysimchecker
+```
+
+### Perfomrm Full Comparison and Output to CSV
+```
+pysimchecker --path /path/to/directory --full-comparison output_file_name
 ```
 
 ## Output Explanation
