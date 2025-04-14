@@ -1,6 +1,26 @@
 import argparse
+import sys
+import time
+import threading
 from .file_utils import process_files, get_file, get_threshold
 from .similarity import similarity_checker
+
+# Spinner function
+def spinner(message):
+    stop_spinner = threading.Event()
+
+    def spinning():
+        while not stop_spinner.is_set():
+            for char in "|/-\\":
+                if stop_spinner.is_set():
+                    break
+                sys.stdout.write(f"\r{message} {char}")
+                sys.stdout.flush()
+                time.sleep(0.1)
+
+    spinner_thread = threading.Thread(target=spinning, daemon=True)
+    spinner_thread.start()
+    return stop_spinner.set
 
 def main():
     """
@@ -49,7 +69,12 @@ def main():
     file_names, file_contents = process_files(args)
 
     if len(file_names) > 1:
-        results = similarity_checker(file_names, file_contents, args.threshold, args.method, args.verbose, args.full_comparison)
+        stop_spinner = spinner("Calculating similarity...")
+        try:
+            results = similarity_checker(file_names, file_contents, args.threshold, args.method, args.verbose, args.full_comparison)
+        finally:
+            stop_spinner()
+            print("\nCalculation complete.", end="")
         print(results)
     else:
         print("No files to compare.")
