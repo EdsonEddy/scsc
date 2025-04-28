@@ -54,7 +54,7 @@ def main():
     parser.add_argument('--threshold', '-t', type=get_threshold, default=0.75, help='The similarity threshold (default: 0.75, range: 0.0 - 1.0)')
     
     # Add the 'method' argument
-    parser.add_argument('--method', '-m', type=str, choices=['pysimchecker', 'pycode_similar', 'locmoss', 'codesight'], default='pysimchecker', help='The method to use for similarity detection (default: pysimchecker)')
+    parser.add_argument('--method', '-m', type=str, choices=['pysimchecker', 'pycode_similar', 'locmoss', 'codesight', 'shingling'], default='pysimchecker', help='The method to use for similarity detection (default: pysimchecker)')
 
     # Add the 'verbose' argument
     parser.add_argument('--verbose', '-v', action='store_true', help='Display verbose output')

@@ -46,6 +46,12 @@ class CodePreprocessor:
         
         return tokens
     
+    def tokenize_and_hash_code(self, code_string):
+        # Tokenize the code string and hash the tokens
+        tokens = self.tokenize_code(code_string)
+        token_hashes = [hash(tuple(token)) for token in tokens]
+        return token_hashes
+    
     def get_complete_path(self, file_name):
         return os.path.abspath(file_name)
     
@@ -58,6 +64,8 @@ class CodePreprocessor:
             return self.get_complete_path(file_name)
         elif self.method == 'codesight':
             return self.get_complete_path(file_name)
+        elif self.method == 'shingling':
+            return self.tokenize_and_hash_code(code_string)
         
         # Default method return the same code
         return code_string

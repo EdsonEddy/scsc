@@ -4,6 +4,7 @@ from .pysimchecker import PySimChecker
 from .pycode_similar import PyCodeSimilar
 from .locmoss import Locmoss
 from .codesight import Codesight
+from .token_rolling_shingling import TokenRollingShingling
 from .constants import END_COLOR, DELETE_TEXT_COLOR, ADD_TEXT_COLOR
 import csv
 
@@ -16,6 +17,8 @@ def get_similarity_method(method, verbose):
         return Locmoss(verbose)
     elif method == 'codesight':
         return Codesight(verbose)
+    elif method == 'shingling':
+        return TokenRollingShingling(verbose)
     # Default method is PySimChecker
     return PySimChecker(verbose)
 
