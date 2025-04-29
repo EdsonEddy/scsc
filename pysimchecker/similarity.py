@@ -8,7 +8,12 @@ from .token_rolling_shingling import TokenRollingShingling
 from .constants import END_COLOR, DELETE_TEXT_COLOR, ADD_TEXT_COLOR
 import csv
 
-def get_similarity_method(method, verbose):
+def get_similarity_method(args):
+    # Get the arguments
+    method = args.method
+    verbose = args.verbose
+    window = args.window
+
     if method == 'pycode_similar':
         return PyCodeSimilar(verbose)
     elif method == 'pysimchecker':
@@ -18,7 +23,7 @@ def get_similarity_method(method, verbose):
     elif method == 'codesight':
         return Codesight(verbose)
     elif method == 'shingling':
-        return TokenRollingShingling(verbose)
+        return TokenRollingShingling(verbose, window)
     # Default method is PySimChecker
     return PySimChecker(verbose)
 
@@ -49,12 +54,16 @@ def generate_output(file_names, groups, percentage_groups, verbose_groups):
 
     return output
 
-def efficient_comparison_output(file_names, file_contents, threshold, method, verbose):
+def efficient_comparison_output(file_names, file_contents, args):
+    # Get the arguments
+    threshold = args.threshold
+    method = args.method
+    verbose = args.verbose
+
     file_number = len(file_names)
-    
     grouper = UnionFind(file_number)
     processor = CodePreprocessor(method)
-    similarity_method = get_similarity_method(method, verbose)
+    similarity_method = get_similarity_method(args)
 
     proccesed_files = [processor.preprocess_code(file_content, file_name) for file_content, file_name in zip(file_contents, file_names)]
     percentage_file = [0.00] * file_number
@@ -85,14 +94,17 @@ def efficient_comparison_output(file_names, file_contents, threshold, method, ve
     
     return generate_output(file_names, groups, percentage_file, verbose_file)
 
-def full_comparison_output(file_names, file_contents, method, verbose, csv_file):
+def full_comparison_output(file_names, file_contents, args):
+    # Get the arguments
+    method = args.method
+    verbose = args.verbose
     # Add .csv extension if not present
     if not csv_file.endswith(".csv"):
         csv_file += ".csv"
 
     file_number = len(file_names)
     processor = CodePreprocessor(method)
-    similarity_method = get_similarity_method(method, verbose)
+    similarity_method = get_similarity_method(args)
 
     proccesed_files = [processor.preprocess_code(file_content, file_name) for file_content, file_name in zip(file_contents, file_names)]
     
@@ -122,10 +134,12 @@ def full_comparison_output(file_names, file_contents, method, verbose, csv_file)
     
     return f"Full comparison report generated: {csv_file}"
 
-def similarity_checker(file_names, file_contents, threshold, method, verbose, full_comparison):
+def similarity_checker(file_names, file_contents, args):
+    # Get the arguments
+    full_comparison = args.full_comparison
     similarity_output = ""
     if full_comparison:
-        similarity_output = full_comparison_output(file_names, file_contents, method, verbose, full_comparison)
+        similarity_output = full_comparison_output(file_names, args)
     else:
-        similarity_output = efficient_comparison_output(file_names, file_contents, threshold, method, verbose)
+        similarity_output = efficient_comparison_output(file_names, file_contents, args)
     return similarity_output

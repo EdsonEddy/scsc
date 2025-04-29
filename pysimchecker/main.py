@@ -4,6 +4,7 @@ import time
 import threading
 from .file_utils import process_files, get_file, get_threshold
 from .similarity import similarity_checker
+from .validator_args import validate_arguments
 
 # Spinner function
 def spinner(message):
@@ -62,8 +63,17 @@ def main():
     # Add the full comparison argument
     parser.add_argument('--full-comparison', '-fc', type=str, help='Compare each file with every other file and output the results to the specified CSV file')
 
+    # Add the 'window' argument for shingling method
+    parser.add_argument('--window', '-w', type=int, default=5, help='Window size for the shingling method')
+
     # Parse the arguments
     args = parser.parse_args()
+
+    # Validate the arguments
+    try:
+        validate_arguments(args)
+    except argparse.ArgumentError as e:
+        parser.error(str(e))
     
     # Process the files
     file_names, file_contents = process_files(args)
@@ -71,7 +81,7 @@ def main():
     if len(file_names) > 1:
         stop_spinner = spinner("Calculating similarity...")
         try:
-            results = similarity_checker(file_names, file_contents, args.threshold, args.method, args.verbose, args.full_comparison)
+            results = similarity_checker(file_names, file_contents, args)
         finally:
             stop_spinner()
             print("\nCalculation complete.", end="")
