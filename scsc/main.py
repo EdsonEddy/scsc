@@ -37,7 +37,7 @@ def main():
         None
     """
     # Create the argument parser
-    parser = argparse.ArgumentParser(description='PySimChecker: Detect similarity between source codes.')
+    parser = argparse.ArgumentParser(description='scsc: Detect similarity between source codes.')
     
     # Create a mutually exclusive group
     group = parser.add_mutually_exclusive_group(required=True)
@@ -68,12 +68,6 @@ def main():
 
     # Parse the arguments
     args = parser.parse_args()
-
-    # Validate the arguments
-    try:
-        validate_arguments(args)
-    except argparse.ArgumentError as e:
-        parser.error(str(e))
     
     # Process the files
     file_names, file_contents = process_files(args)

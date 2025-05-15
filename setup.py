@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="pysimchecker",
+    name="scsc",
     version="1.1.0",
     packages=find_packages(),
     install_requires=[
@@ -10,10 +10,10 @@ setup(
     ],
     author="Eddy Lecoña",
     author_email="crew0eddy@gmail.com",
-    description="A tool for analyzing code snippets and detecting similarities",
+    description="Source Code Similarity Checker is tool for analyzing code snippets and detecting similarities.",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url="https://github.com/EdsonEddy/pysimchecker",
+    url="https://github.com/EdsonEddy/scsc",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -23,15 +23,16 @@ setup(
     ],
     keywords="code analysis, similarity detection, plagiarism detection, code snippets, code comparison",
     project_urls={
-        "Bug Tracker": "https://github.com/EdsonEddy/pysimchecker/issues",
-        "Documentation": "https://github.com/EdsonEddy/pysimchecker/wiki",
-        "Source Code": "https://github.com/EdsonEddy/pysimchecker",
+        "Bug Tracker": "https://github.com/EdsonEddy/scsc/issues",
+        "Documentation": "https://github.com/EdsonEddy/scsc/wiki",
+        "Source Code": "https://github.com/EdsonEddy/scsc",
     },
     python_requires='>=3.9',
     platforms=["All"],
     entry_points={
         'console_scripts': [
-            'pysimchecker=pysimchecker.main:main',
+            'scsc=scsc.main:main',
         ],
     },
+    license="MIT",
 )

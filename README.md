@@ -1,6 +1,6 @@
-# PySimChecker
+# Source Code Similarity Checker
 
-PySimChecker is a tool designed to detect similarity between source codes, even when they have been obfuscated using various techniques. It is ideal for programming teachers and students who want to verify the originality of the code.
+Source Code Similarity Checker is a tool designed to detect similarity between source codes, even when they have been obfuscated using various techniques. It is ideal for programming teachers and students who want to verify the originality of the code.
 
 ## Key Features
 
@@ -17,11 +17,11 @@ PySimChecker is a tool designed to detect similarity between source codes, even 
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-username/pysimchecker.git
+    git clone https://github.com/EdsonEddy/scsc.git
     ```
 2. Navigate to the project directory:
     ```sh
-    cd pysimchecker
+    cd scsc
     ```
 3. Install the package:
     ```sh
@@ -41,51 +41,51 @@ PySimChecker is a tool designed to detect similarity between source codes, even 
 
 ## Usage
 
-PySimChecker can be used from the command line. Here are some usage examples:
+Source Code Similarity Checker can be used from the command line. Here are some usage examples:
 
 ### Compare Specific Files
 ```sh
-pysimchecker --files file1.py file2.py
+scsc --files file1.py file2.py
 ```
 
 ### Compare Specific Directory
 ```sh
-pysimchecker --path /path/to/directory
+scsc --path /path/to/directory
 ```
 
 ### Analyze an Entire Directory
 ```sh
-pysimchecker --path /path/to/directory --recursive
+scsc --path /path/to/directory --recursive
 ```
 
 ### Adjust the Similarity Threshold
 ```sh
-pysimchecker --path /path/to/directory --threshold 0.8
+scsc --path /path/to/directory --threshold 0.8
 ```
 
 ### Using the `pycode_similar` Method
 ```sh
-pysimchecker --path /path/to/directory --method pycode_similar
+scsc --path /path/to/directory --method pycode_similar
 ```
 
 ### Using the `pysimchecker` Method
 ```sh
-pysimchecker --path /path/to/directory --method pysimchecker
+scsc --path /path/to/directory --method pysimchecker
 ```
 
 ### Perfomrm Full Comparison and Output to CSV
 ```
-pysimchecker --path /path/to/directory --full-comparison output_file_name
+scsc --path /path/to/directory --full-comparison output_file_name
 ```
 
 ## Output Explanation
 
 ### Option `-f` (Specific Files)
 
-When using the `-f` option to compare specific files, PySimChecker generates an output that includes the changes needed to transform one file into another, as well as the similarity percentage between the files. The output has the following format:
+When using the `-f` option to compare specific files, scsc generates an output that includes the changes needed to transform one file into another, as well as the similarity percentage between the files. The output has the following format:
 
 ```sh
-pysimchecker --files file1.py file2.py
+scsc --files file1.py file2.py
 ```
 
 **Output:**
@@ -102,10 +102,10 @@ Similarity Percentage: XX.XX%
 
 ### Option `-p` (Specific Files)
 
-When using the `-p` option to analyze an entire directory, PySimChecker groups the files based on their similarity and displays unique files and groups of similar files. The output has the following format:
+When using the `-p` option to analyze an entire directory, scsc groups the files based on their similarity and displays unique files and groups of similar files. The output has the following format:
 
 ```sh
-pysimchecker --path /path/to/directory
+scsc --path /path/to/directory
 ```
 
 **Output:**
@@ -141,9 +141,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Links
 
-- [Repository](https://github.com/EdsonEddy/pysimchecker)
-- [Documentation](https://github.com/EdsonEddy/pysimchecker/wiki)
-- [Report a Bug](https://github.com/EdsonEddy/pysimchecker/issues)
+- [Repository](https://github.com/EdsonEddy/scsc)
+- [Documentation](https://github.com/EdsonEddy/scsc/wiki)
+- [Report a Bug](https://github.com/EdsonEddy/scsc/issues)
 
 ## Third-Party Licenses
 
