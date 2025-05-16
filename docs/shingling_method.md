@@ -7,7 +7,7 @@ Token Rolling Shingling is a method used to calculate the similarity between two
 ## How It Works
 
 1. **Shingle Generation**:  
-   The method generates shingles by sliding a window of a fixed size (`w`) over the sequence. Each shingle is a tuple of consecutive tokens.
+   The method generates shingles by sliding a window of a fixed size (`w`) over the sequence (default = 5). Each shingle is a tuple of consecutive tokens.
 
 2. **Jaccard Similarity**:  
    The similarity between two sequences is calculated using the Jaccard similarity coefficient. This is defined as the size of the intersection of two sets of shingles divided by the size of their union.

@@ -12,7 +12,6 @@ def get_similarity_method(args):
     # Get the arguments
     method = args.method
     verbose = args.verbose
-    window = args.window
 
     if method == 'pycode_similar':
         return PyCodeSimilar(verbose)
@@ -23,7 +22,7 @@ def get_similarity_method(args):
     elif method == 'codesight':
         return Codesight(verbose)
     elif method == 'shingling':
-        return TokenRollingShingling(verbose, window)
+        return TokenRollingShingling(verbose)
     # Default method is PySimChecker
     return PySimChecker(verbose)
 

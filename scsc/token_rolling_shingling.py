@@ -3,9 +3,9 @@ class TokenRollingShingling:
     Token Rolling Shingling
     """
 
-    def __init__(self, verbose, window):
+    def __init__(self, verbose):
         self.verbose = verbose
-        self.w = window
+        self.w = 5  # default window size for shingling
 
     def calculate_shingles(self, sequence):
         """
