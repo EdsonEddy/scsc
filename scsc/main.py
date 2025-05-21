@@ -74,8 +74,8 @@ def main():
             results = similarity_checker(file_names, file_contents, args)
         finally:
             stop_spinner()
-            print("\nCalculation complete.", end="")
-        print(results)
+            print()
+        print(results, end="")
     else:
         print("No files to compare.")
 
