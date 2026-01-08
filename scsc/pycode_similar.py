@@ -87,16 +87,18 @@ class BaseNodeNormalizer(ast.NodeTransformer):
         :return:
         """
 
-        def _mark_docstring_nodes(body):
-            if body and isinstance(body, collections.Sequence):
-                for n in body:
-                    if isinstance(n, ast.Expr) and isinstance(n.value, ast.Str):
-                        n.is_docstring = True
+        # Removed code for incompatibility with Python versions prior to 3.8
+        # TODO: Implement compatible docstring detection for older Python versions
+        # def _mark_docstring_nodes(body):
+        #     if body and isinstance(body, collections.Sequence):
+        #         for n in body:
+        #             if isinstance(n, ast.Expr) and isinstance(n.value, ast.Str):
+        #                 n.is_docstring = True
 
-        node_body = getattr(node, 'body', None)
-        _mark_docstring_nodes(node_body)
-        node_orelse = getattr(node, 'orelse', None)
-        _mark_docstring_nodes(node_orelse)
+        # node_body = getattr(node, 'body', None)
+        # _mark_docstring_nodes(node_body)
+        # node_orelse = getattr(node, 'orelse', None)
+        # _mark_docstring_nodes(node_orelse)
 
     @staticmethod
     def _is_docstring(node):
@@ -695,17 +697,10 @@ if __name__ == '__main__':
     main()
 
 class PyCodeSimilar:
-    def __init__(self, verbose):
-        self.verbose = verbose
 
-    # TODO: Implement the function
-    def get_extra_info(self):
-        return ""
-    
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
         similarity_coefficient = 0.0
         pycode_list = [(name, content) for name, content in enumerate([proccesed_code1, proccesed_code2])]
-
         # Arguments for the pycode_similar method
         args = {
             'files': pycode_list,

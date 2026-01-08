@@ -1,11 +1,5 @@
 ## PySimChecker Methods
 
-### `get_extra_info`
-
-- **Description:** This method retrieves additional information about the PySimChecker process. It generates a detailed report of the code changes, including insertions and deletions.
-- **Arguments:** None
-- **Returns:** `str` - A formatted string containing the extra information.
-
 ### `get_similarity`
 
 - **Description:** This method calculates the similarity between two pieces of code using the Myers' algorithm. PySimChecker is a tool that compares source code files and detects similarities based on tokenization and edit distance.

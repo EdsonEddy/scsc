@@ -5,23 +5,6 @@ import threading
 from .file_utils import process_files, get_file, get_threshold
 from .similarity import similarity_checker
 
-# Spinner function
-def spinner(message):
-    stop_spinner = threading.Event()
-
-    def spinning():
-        while not stop_spinner.is_set():
-            for char in "|/-\\":
-                if stop_spinner.is_set():
-                    break
-                sys.stdout.write(f"\r{message} {char}")
-                sys.stdout.flush()
-                time.sleep(0.1)
-
-    spinner_thread = threading.Thread(target=spinning, daemon=True)
-    spinner_thread.start()
-    return stop_spinner.set
-
 def main():
     """
     Main function to parse command-line arguments and execute the similarity checker.
@@ -30,8 +13,7 @@ def main():
         --files, -f (str, nargs=2): The input two files to compare.
         --recursive, -r (bool): Recursively search through directories.
         --threshold, -t (float): The similarity threshold (default: 0.75, range: 0.0 - 1.0).
-        --method, -m (str): The method to use for similarity detection (default: pysimchecker).
-        --verbose, -v (bool): Display verbose output
+        --method, -m (str): The method to use for similarity detection (default: ted).
     Returns:
         None
     """
@@ -54,10 +36,7 @@ def main():
     parser.add_argument('--threshold', '-t', type=get_threshold, default=0.75, help='The similarity threshold (default: 0.75, range: 0.0 - 1.0)')
     
     # Add the 'method' argument
-    parser.add_argument('--method', '-m', type=str, choices=['pysimchecker', 'pycode_similar', 'locmoss', 'codesight', 'shingling'], default='pysimchecker', help='The method to use for similarity detection (default: pysimchecker)')
-
-    # Add the 'verbose' argument
-    parser.add_argument('--verbose', '-v', action='store_true', help='Display verbose output')
+    parser.add_argument('--method', '-m', type=str, choices=['ted', 'asted', 'gst', 'lf', 'trs', 'mdiff', 'csim'], default='ted', help='The method to use for similarity detection (default: ted)')
 
     # Add the full comparison argument
     parser.add_argument('--full-comparison', '-fc', type=str, help='Compare each file with every other file and output the results to the specified CSV file')
@@ -69,13 +48,11 @@ def main():
     file_names, file_contents = process_files(args)
 
     if len(file_names) > 1:
-        stop_spinner = spinner("Calculating similarity...")
         try:
             results = similarity_checker(file_names, file_contents, args)
-        finally:
-            stop_spinner()
-            print()
-        print(results, end="")
+            print(results)
+        except Exception as e:
+            print("An error occurred during similarity checking.", e)
     else:
         print("No files to compare.")
 

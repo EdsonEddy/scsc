@@ -56,16 +56,16 @@ class CodePreprocessor:
         return os.path.abspath(file_name)
     
     def preprocess_code(self, code_string, file_name):
-        if self.method == 'pycode_similar':
+        if self.method == 'ted':
             return self.add_main(code_string)
-        elif self.method == 'pysimchecker':
+        elif self.method == 'mdiff':
             return self.tokenize_code(code_string)
-        elif self.method == 'locmoss':
+        elif self.method == 'lf':
             return self.get_complete_path(file_name)
-        elif self.method == 'codesight':
+        elif self.method == 'gst':
             return self.get_complete_path(file_name)
-        elif self.method == 'shingling':
+        elif self.method == 'trs':
             return self.tokenize_and_hash_code(code_string)
         
         # Default method return the same code
-        return code_string
+        return self.add_main(code_string)

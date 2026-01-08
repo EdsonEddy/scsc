@@ -11,22 +11,21 @@ import csv
 def get_similarity_method(args):
     # Get the arguments
     method = args.method
-    verbose = args.verbose
 
-    if method == 'pycode_similar':
-        return PyCodeSimilar(verbose)
-    elif method == 'pysimchecker':
-        return PySimChecker(verbose)
-    elif method == 'locmoss':
-        return Locmoss(verbose)
-    elif method == 'codesight':
-        return Codesight(verbose)
-    elif method == 'shingling':
-        return TokenRollingShingling(verbose)
+    if method == 'ted':
+        return PyCodeSimilar()
+    elif method == 'mdiff':
+        return PySimChecker()
+    elif method == 'lf':
+        return Locmoss()
+    elif method == 'gst':
+        return Codesight()
+    elif method == 'trs':
+        return TokenRollingShingling()
     # Default method is PySimChecker
-    return PySimChecker(verbose)
+    return PySimChecker()
 
-def generate_output(file_names, groups, percentage_groups, verbose_groups):
+def generate_output(file_names, groups, percentage_groups):
     output = ""
     unique_files = []
 
@@ -36,14 +35,9 @@ def generate_output(file_names, groups, percentage_groups, verbose_groups):
             for file in file_group[1:]:
                 file_name = file_names[file]
                 percentage = percentage_groups[file]
-                verbose = verbose_groups[file]
                 output += (
                     f"{DELETE_TEXT_COLOR}{file_name_src} is similar to {file_name} with similarity percentage: {percentage * 100:.2f}%{END_COLOR}\n"
                 )
-                if verbose:
-                    output += (
-                        f"{verbose}\n"
-                    )
         else:
             unique_files.append(file_names[file_group[0]])
 
@@ -57,7 +51,6 @@ def efficient_comparison_output(file_names, file_contents, args):
     # Get the arguments
     threshold = args.threshold
     method = args.method
-    verbose = args.verbose
 
     file_number = len(file_names)
     grouper = UnionFind(file_number)
@@ -66,7 +59,6 @@ def efficient_comparison_output(file_names, file_contents, args):
 
     proccesed_files = [processor.preprocess_code(file_content, file_name) for file_content, file_name in zip(file_contents, file_names)]
     percentage_file = [0.00] * file_number
-    verbose_file = [""] * file_number
 
     for i in range(file_number - 1):
         if grouper.find(i) == i:
@@ -78,8 +70,6 @@ def efficient_comparison_output(file_names, file_contents, args):
                     if similarity_percentage > threshold:
                         grouper.union(i, j)
                         percentage_file[j] = similarity_percentage
-                        if verbose:
-                            verbose_file[j] = similarity_method.get_extra_info()
     
     groups = {}
     
@@ -91,12 +81,11 @@ def efficient_comparison_output(file_names, file_contents, args):
 
     groups = list(groups.values())
     
-    return generate_output(file_names, groups, percentage_file, verbose_file)
+    return generate_output(file_names, groups, percentage_file)
 
 def full_comparison_output(file_names, file_contents, args):
     # Get the arguments
     method = args.method
-    verbose = args.verbose
     # Add .csv extension if not present
     if not csv_file.endswith(".csv"):
         csv_file += ".csv"

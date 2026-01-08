@@ -1,11 +1,5 @@
 ## Locmoss Methods
 
-### `get_extra_info`
-
-- **Description:** This method retrieves additional information about the Locmoss process. Currently, it returns an empty string as a placeholder for future implementation.
-- **Arguments:** None
-- **Returns:** `str` - An empty string.
-
 ### `get_similarity_coefficient`
 
 - **Description:** This method calculates the similarity coefficient between two pieces of code using the Locmoss algorithm. The Locmoss algorithm is designed to detect similarities between code snippets, even if they have been obfuscated. It utilizes the winnowing algorithm for efficient similarity detection.

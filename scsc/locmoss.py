@@ -1486,13 +1486,6 @@ if __name__ == '__main__':
 
 # Implemtation of the Locmoss class
 class Locmoss:
-    # TODO: Add the verbose argument in the Mossengine
-    def __init__(self, verbose):
-        self.verbose = verbose
-    
-    # TODO: Implement the function
-    def get_extra_info(self):
-        return ""
 
     # Function to calculate the similarity coefficient between two pieces of code using the Locmoss algorithm.
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):

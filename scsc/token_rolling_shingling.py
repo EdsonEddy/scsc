@@ -3,8 +3,7 @@ class TokenRollingShingling:
     Token Rolling Shingling
     """
 
-    def __init__(self, verbose):
-        self.verbose = verbose
+    def __init__(self):
         self.w = 5  # default window size for shingling
 
     def calculate_shingles(self, sequence):
@@ -25,9 +24,6 @@ class TokenRollingShingling:
         union = len(set(shingles1) | set(shingles2))
         return intersection / union if union != 0 else 0.0
     
-    def get_extra_info(self):
-        return ""
-
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
         shingles1 = self.calculate_shingles(proccesed_code1)
         shingles2 = self.calculate_shingles(proccesed_code2)

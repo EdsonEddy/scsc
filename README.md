@@ -1,17 +1,23 @@
 # Source Code Similarity Checker
 
-Source Code Similarity Checker is a tool designed to detect similarity between source codes, even when they have been obfuscated using various techniques. It is ideal for programming teachers and students who want to verify the originality of the code.
+Source Code Similarity Checker is a tool designed to detect similarity between source codes, even when they have been obfuscated using various techniques and methods.
 
 ## Key Features
 
 - **Similarity Detection:** Detects similarity between source codes, even if they contain obfuscation techniques.
-- **Advanced Analysis:** Utilizes tokenization, and edit distance to perform the analysis.
+- **Advanced Analysis:** Utilizes various algorithms and methods to analyze code structure and logic.
+- **Customizable Thresholds:** Allows users to set similarity thresholds for more precise detection.
+- **Multiple Methods:** Supports different methods for similarity detection, including `pysimchecker`, `pycode_similar`, `locmoss`, `codesight`, `shingling` and `csim`.
+- **Detailed Output:** Provides detailed reports on detected similarities, including code differences and similarity percentages.
 
-## Technologies Used
+## Methods Used
 
-- **Python:** Main programming language.
-- **Tokenization:** Breaks down the source code into tokens for detailed analysis.
-- **Edit Distance:** To measure the similarity between different code fragments.
+- **TED:** Abstract Syntax Tree and Tree Edit Distance for structural comparison of code.
+- **GST:** Greedy String Tiling for identifying common substrings in code.
+- **LF:** Local fingerprinting algorithm for creating unique identifiers for code segments.
+- **MDIFF:** Myers Diff Algorithm for comparison of code differences.
+- **TRS:** Token Rolling Shingling for similarity detection based on overlapping token subsets.
+- **CSIM:** Code Similarity is a method that combine Parse Trees and Tree Edit distance for code structure analysis.
 
 ## Installation
 
@@ -34,8 +40,7 @@ Source Code Similarity Checker is a tool designed to detect similarity between s
 - `--files`, `-f`: Specific input files to compare.
 - `--recursive`, `-r`: Recursively search through directories.
 - `--threshold`, `-t`: Similarity threshold (default: 0.75, range: 0.0 - 1.0).
-- `--method`, `-m`: The method to use for similarity detection. Options are `pysimchecker`, `pycode_similar`, `locmoss`, `codesight` and `shingling` (default: pysimchecker).
-- `--verbose`, `-v`: Verbose output.
+- `--method`, `-m`: The method to use for similarity detection. Options are `ted`, `gst`, `lf`, `trs`, `mdiff` and `csim`  (default: `ted`).
 - `--full-comparison`, `-fc`: Compare each file with every other file and output the results to the specified CSV file.
 
 
@@ -63,17 +68,12 @@ scsc --path /path/to/directory --recursive
 scsc --path /path/to/directory --threshold 0.8
 ```
 
-### Using the `pycode_similar` Method
+### Using the `TED` Method
 ```sh
-scsc --path /path/to/directory --method pycode_similar
+scsc --path /path/to/directory --method ted
 ```
 
-### Using the `pysimchecker` Method
-```sh
-scsc --path /path/to/directory --method pysimchecker
-```
-
-### Perfomrm Full Comparison and Output to CSV
+### Perform Full Comparison and Output to CSV
 ```
 scsc --path /path/to/directory --full-comparison output_file_name
 ```
@@ -134,6 +134,14 @@ Contributions are welcome. Please follow these steps to contribute:
 For more information on the techniques used, you can refer to the following resources:
 
 - [Tokenization](https://en.wikipedia.org/wiki/Tokenization)
+- [Edit Distance](https://en.wikipedia.org/wiki/Edit_distance)
+- [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
+- [Tree Edit Distance](https://en.wikipedia.org/wiki/Tree_edit_distance)
+- [Greedy String Tiling](https://en.wikipedia.org/wiki/Greedy_string_t
+iling)
+- [Fingerprinting](https://en.wikipedia.org/wiki/Fingerprinting_(computing))
+- [Myers Diff Algorithm](https://en.wikipedia.org/wiki/Myers%27_difference_algorithm)
+- [Shingling Method](docs/shingling_method.md)
 
 ## License
 
