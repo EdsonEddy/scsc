@@ -5,6 +5,7 @@ from .pycode_similar import PyCodeSimilar
 from .locmoss import Locmoss
 from .codesight import Codesight
 from .token_rolling_shingling import TokenRollingShingling
+from .Csim import Csim
 from .constants import END_COLOR, DELETE_TEXT_COLOR, ADD_TEXT_COLOR
 import csv
 
@@ -22,7 +23,9 @@ def get_similarity_method(args):
         return Codesight()
     elif method == 'trs':
         return TokenRollingShingling()
-    # Default method is PySimChecker
+    elif method == 'csim':
+        return Csim()
+    # Default method is TED
     return PySimChecker()
 
 def generate_output(file_names, groups, percentage_groups):
@@ -43,7 +46,7 @@ def generate_output(file_names, groups, percentage_groups):
 
     if unique_files:
         for file in unique_files:
-            output += (f"\n{ADD_TEXT_COLOR}File that is unique: {file}{END_COLOR}")
+            output += (f"{ADD_TEXT_COLOR}File that is unique: {file}{END_COLOR}\n")
 
     return output
 

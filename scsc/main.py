@@ -1,7 +1,4 @@
 import argparse
-import sys
-import time
-import threading
 from .file_utils import process_files, get_file, get_threshold
 from .similarity import similarity_checker
 

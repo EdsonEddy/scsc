@@ -2,6 +2,8 @@ from .constants import IRRELEVANT_TOKENS, TOKENS_WITHOUT_TRANSFORMATION
 from pygments import lex
 from pygments.token import STANDARD_TYPES
 from pygments.lexers import guess_lexer
+from csim import ANTLR_parse
+from csim import Normalize
 import os
 
 # Code Preprocessor, includes methods for preprocessing code
@@ -52,6 +54,10 @@ class CodePreprocessor:
         token_hashes = [hash(tuple(token)) for token in tokens]
         return token_hashes
     
+    def normalize_code(self, code_string):
+        T1 = ANTLR_parse(code_string)
+        return Normalize(T1)
+    
     def get_complete_path(self, file_name):
         return os.path.abspath(file_name)
     
@@ -66,6 +72,8 @@ class CodePreprocessor:
             return self.get_complete_path(file_name)
         elif self.method == 'trs':
             return self.tokenize_and_hash_code(code_string)
+        elif self.method == 'csim':
+            return self.normalize_code(code_string)
         
         # Default method return the same code
         return self.add_main(code_string)
