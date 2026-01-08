@@ -89,6 +89,7 @@ def efficient_comparison_output(file_names, file_contents, args):
 def full_comparison_output(file_names, file_contents, args):
     # Get the arguments
     method = args.method
+    csv_file = args.all
     # Add .csv extension if not present
     if not csv_file.endswith(".csv"):
         csv_file += ".csv"
@@ -127,10 +128,10 @@ def full_comparison_output(file_names, file_contents, args):
 
 def similarity_checker(file_names, file_contents, args):
     # Get the arguments
-    full_comparison = args.full_comparison
+    full_comparison = args.all
     similarity_output = ""
     if full_comparison:
-        similarity_output = full_comparison_output(file_names, args)
+        similarity_output = full_comparison_output(file_names, file_contents, args)
     else:
         similarity_output = efficient_comparison_output(file_names, file_contents, args)
     return similarity_output

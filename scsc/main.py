@@ -36,7 +36,7 @@ def main():
     parser.add_argument('--method', '-m', type=str, choices=['ted', 'asted', 'gst', 'lf', 'trs', 'mdiff', 'csim'], default='ted', help='The method to use for similarity detection (default: ted)')
 
     # Add the full comparison argument
-    parser.add_argument('--full-comparison', '-fc', type=str, help='Compare each file with every other file and output the results to the specified CSV file')
+    parser.add_argument('--all', '-a', type=str, help='Compare each file with every other file and output the results to the specified CSV file')
 
     # Parse the arguments
     args = parser.parse_args()

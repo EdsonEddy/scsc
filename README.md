@@ -41,7 +41,7 @@ Source Code Similarity Checker is a tool designed to detect similarity between s
 - `--recursive`, `-r`: Recursively search through directories.
 - `--threshold`, `-t`: Similarity threshold (default: 0.75, range: 0.0 - 1.0).
 - `--method`, `-m`: The method to use for similarity detection. Options are `ted`, `gst`, `lf`, `trs`, `mdiff` and `csim`  (default: `ted`).
-- `--full-comparison`, `-fc`: Compare each file with every other file and output the results to the specified CSV file.
+- `--all`, `-a`: Compare each file with every other file and output the results to the specified CSV file.
 
 
 ## Usage
@@ -73,9 +73,9 @@ scsc --path /path/to/directory --threshold 0.8
 scsc --path /path/to/directory --method ted
 ```
 
-### Perform Full Comparison and Output to CSV
+### Perform Full Comparison and Output to CSV (.csv extension is generated automatically if not provided)
 ```
-scsc --path /path/to/directory --full-comparison output_file_name
+scsc --path /path/to/directory --all /path/to/output_file_name
 ```
 
 ## Output Explanation
@@ -90,9 +90,6 @@ scsc --files file1.py file2.py
 
 **Output:**
 ```sh
-[DELETE] Code removed from file1.py
----
-[ADD] Code added to file2.py
 Similarity Percentage: XX.XX%
 ```
 
