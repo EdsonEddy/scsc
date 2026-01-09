@@ -1,7 +1,11 @@
 from collections import namedtuple
 from .constants import ADD_HIGHLIGHT_COLOR, DELETE_HIGHLIGHT_COLOR, END_COLOR
 
-class PySimChecker():
+class MdiffAdapter():
+    """
+    Myers Diff Algorithm (MDIFF) method adapter.
+    Original tool: pysimchecker
+    """
     Keep = namedtuple('Keep', ['item'])
     Insert = namedtuple('Insert', ['item'])
     Remove = namedtuple('Remove', ['item'])

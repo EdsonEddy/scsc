@@ -696,7 +696,12 @@ def main():
 if __name__ == '__main__':
     main()
 
-class PyCodeSimilar:
+class TedAdapter:
+    """
+    Tree Edit Distance (TED) method adapter.
+    Original tool: pycode_similar by fyrestone
+    Repository: https://github.com/fyrestone/pycode_similar
+    """
 
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
         similarity_coefficient = 0.0

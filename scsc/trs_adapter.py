@@ -1,6 +1,7 @@
-class TokenRollingShingling:
+class TrsAdapter:
     """
-    Token Rolling Shingling
+    Token Rolling Shingling (TRS) method adapter.
+    Custom implementation for similarity detection based on overlapping token subsets.
     """
 
     def __init__(self):

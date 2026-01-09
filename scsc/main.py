@@ -33,7 +33,7 @@ def main():
     parser.add_argument('--threshold', '-t', type=get_threshold, default=0.75, help='The similarity threshold (default: 0.75, range: 0.0 - 1.0)')
     
     # Add the 'method' argument
-    parser.add_argument('--method', '-m', type=str, choices=['ted', 'asted', 'gst', 'lf', 'trs', 'mdiff', 'csim'], default='ted', help='The method to use for similarity detection (default: ted)')
+    parser.add_argument('--method', '-m', type=str, choices=['ted', 'gst', 'lf', 'trs', 'mdiff', 'csim'], default='ted', help='The method to use for similarity detection (default: ted)')
 
     # Add the full comparison argument
     parser.add_argument('--all', '-a', type=str, help='Compare each file with every other file and output the results to the specified CSV file')

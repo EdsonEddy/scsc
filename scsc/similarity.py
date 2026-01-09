@@ -1,32 +1,41 @@
 from .union_find import UnionFind
 from .code_preprocessor import CodePreprocessor
-from .pysimchecker import PySimChecker
-from .pycode_similar import PyCodeSimilar
-from .locmoss import Locmoss
-from .codesight import Codesight
-from .token_rolling_shingling import TokenRollingShingling
-from .Csim import Csim
+from .mdiff_adapter import MdiffAdapter
+from .ted_adapter import TedAdapter
+from .lf_adapter import LfAdapter
+from .gst_adapter import GstAdapter
+from .trs_adapter import TrsAdapter
+from .csim_adapter import CsimAdapter
 from .constants import END_COLOR, DELETE_TEXT_COLOR, ADD_TEXT_COLOR
 import csv
 
 def get_similarity_method(args):
+    """
+    Get the similarity method based on the method argument.
+    
+    Args:
+        args: Arguments object containing the method selection.
+    
+    Returns:
+        An instance of the corresponding similarity method adapter.
+    """
     # Get the arguments
     method = args.method
 
     if method == 'ted':
-        return PyCodeSimilar()
+        return TedAdapter()
     elif method == 'mdiff':
-        return PySimChecker()
+        return MdiffAdapter()
     elif method == 'lf':
-        return Locmoss()
+        return LfAdapter()
     elif method == 'gst':
-        return Codesight()
+        return GstAdapter()
     elif method == 'trs':
-        return TokenRollingShingling()
+        return TrsAdapter()
     elif method == 'csim':
-        return Csim()
+        return CsimAdapter()
     # Default method is TED
-    return PySimChecker()
+    return TedAdapter()
 
 def generate_output(file_names, groups, percentage_groups):
     output = ""

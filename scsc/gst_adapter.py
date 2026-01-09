@@ -350,7 +350,12 @@ La clase almacena la información en las siguientes referencias:
     -> Signatures: Vector de objetos de la clase Signature que contienen las secuencias de fichas (tokens) de los diferentes archivos.
 """
 
-class Codesight:
+class GstAdapter:
+    """
+    Greedy String Tiling (GST) method adapter.
+    Original tool: Codesight by Andres Mauricio Bejarano Posada
+    Repository: https://github.com/andresbejarano/Codesight
+    """
     
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
         similarity_coefficient = 0.0

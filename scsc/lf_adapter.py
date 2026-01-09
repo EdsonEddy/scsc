@@ -1485,7 +1485,12 @@ if __name__ == '__main__':
         # TODO shorten the paths stuff
 
 # Implemtation of the Locmoss class
-class Locmoss:
+class LfAdapter:
+    """
+    Local Fingerprinting (LF) method adapter.
+    Original tool: locmoss by Jean-Michel Begon
+    Repository: https://github.com/jean-michel-begon/locmoss
+    """
 
     # Function to calculate the similarity coefficient between two pieces of code using the Locmoss algorithm.
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):

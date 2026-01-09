@@ -1,6 +1,11 @@
 from csim import SimilarityIndex
 from zss import simple_distance
-class Csim():
+
+class CsimAdapter():
+    """
+    Code Similarity (CSIM) method adapter.
+    Combines Parse Trees and Tree Edit Distance for code structure analysis.
+    """
 
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
         N1, len_N1 = proccesed_code1
