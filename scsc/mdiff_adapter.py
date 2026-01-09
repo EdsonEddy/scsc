@@ -41,9 +41,7 @@ class MdiffAdapter():
         return max_length
 
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
-        # TODO: Fix the pysimchecker method
-        #edit_distance = self.calculate_edit_distance(proccesed_code1, proccesed_code2)
-        edit_distance = 0
+        edit_distance = self.calculate_edit_distance(proccesed_code1, proccesed_code2)
         len_a = len(proccesed_code1)
         len_b = len(proccesed_code2)
         
