@@ -59,8 +59,10 @@ class CodePreprocessor:
         T1 = ANTLR_parse(code_string)
         return Normalize(T1)
     
-    def get_complete_path(self, file_name):
-        return os.path.abspath(file_name)
+    def get_abspath_and_content(self, file_name, file_content):
+        if file_name is None:
+            return None, file_content
+        return os.path.abspath(file_name), file_content
     
     def get_signature(self, code_string):
         return SignatureFactory(code_string)
@@ -71,7 +73,7 @@ class CodePreprocessor:
         elif self.method == 'mdiff':
             return self.tokenize_code(code_string)
         elif self.method == 'lf':
-            return self.get_complete_path(file_name)
+            return self.get_abspath_and_content(file_name, code_string)
         elif self.method == 'gst':
             return self.get_signature(code_string)
         elif self.method == 'trs':

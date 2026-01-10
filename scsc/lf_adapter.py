@@ -1485,6 +1485,7 @@ if __name__ == '__main__':
         # TODO shorten the paths stuff
 
 # Implemtation of the Locmoss class
+import tempfile
 class LfAdapter:
     """
     Local Fingerprinting (LF) method adapter.
@@ -1495,29 +1496,57 @@ class LfAdapter:
     # Function to calculate the similarity coefficient between two pieces of code using the Locmoss algorithm.
     def get_similarity_coefficient(self, proccesed_code1, proccesed_code2):
         similarity_coefficient = 0.0
+        proccesed_code1_name, proccesed_code1_content = proccesed_code1
+        proccesed_code2_name, proccesed_code2_content = proccesed_code2
 
-        # arguments for the Locmoss method
-        args = {
-            "paths": [proccesed_code1, proccesed_code2],
-            "language": None,
-            "collision_threshold": 10,
-            "window_size": 15,
-            "kgram_len": 5,
-            "top": 15,
-        }
+        # Start with provided paths (absolute when available)
+        paths_to_process = [proccesed_code1_name, proccesed_code2_name]
+        temp_files_created = []
 
-        # calculating the similarity coefficient, jaccard similarity
-        parser_factory = select_parser_factory(args["language"])
-        fingerprinter = Winnower(parser_factory, args["window_size"], args["kgram_len"])
-        filter = Filter(args["collision_threshold"])
-        moss = MossEngine(fingerprinter, filter)
-        softwares = Software.list_from_globs(args["paths"])
-        reference = None
-        moss.build_index(softwares, reference)
-        jaccard_sim = moss.query(Ranking.as_query(JaccardSimilarity()))
+        # Create temp files only when no path provided
+        if proccesed_code1_name is None:
+            with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=".py", encoding="utf-8") as tmp1:
+                tmp1.write(proccesed_code1_content)
+                tmp1.flush()
+                paths_to_process[0] = tmp1.name
+                temp_files_created.append(tmp1.name)
+        
+        if proccesed_code2_name is None:
+            with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix=".py", encoding="utf-8") as tmp2:
+                tmp2.write(proccesed_code2_content)
+                tmp2.flush()
+                paths_to_process[1] = tmp2.name
+                temp_files_created.append(tmp2.name)
 
-        with jaccard_sim.top(args["top"]) as top_matches:
-            for match in top_matches:
-                return round(match[0], 2)
+        try:
+            # Setting up arguments for the Locmoss algorithm
+            args = {
+                "paths": paths_to_process,
+                "language": None,
+                "collision_threshold": 10,
+                "window_size": 15,
+                "kgram_len": 5,
+                "top": 15,
+            }
+            # calculating the similarity coefficient, jaccard similarity
+            parser_factory = select_parser_factory(args["language"])
+            fingerprinter = Winnower(parser_factory, args["window_size"], args["kgram_len"])
+            filter = Filter(args["collision_threshold"])
+            moss = MossEngine(fingerprinter, filter)
+            softwares = Software.list_from_globs(args["paths"])
+            moss.build_index(softwares, None)
+            jaccard_sim = moss.query(Ranking.as_query(JaccardSimilarity()))
+
+            with jaccard_sim.top(args["top"]) as top_matches:
+                for match in top_matches:
+                    return round(match[0], 2)
+
+        finally:
+            # cleaning up temporary files
+            for tmp in temp_files_created:
+                try:
+                    os.remove(tmp)
+                except Exception:
+                    pass
 
         return similarity_coefficient
