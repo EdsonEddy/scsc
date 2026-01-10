@@ -51,3 +51,6 @@ __pycache__/
 
 # Python egg and build files
 *.egg-info
+
+# Test files
+/test

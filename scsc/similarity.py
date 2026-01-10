@@ -9,19 +9,7 @@ from .csim_adapter import CsimAdapter
 from .constants import END_COLOR, DELETE_TEXT_COLOR, ADD_TEXT_COLOR
 import csv
 
-def get_similarity_method(args):
-    """
-    Get the similarity method based on the method argument.
-    
-    Args:
-        args: Arguments object containing the method selection.
-    
-    Returns:
-        An instance of the corresponding similarity method adapter.
-    """
-    # Get the arguments
-    method = args.method
-
+def get_similarity_method(method):
     if method == 'ted':
         return TedAdapter()
     elif method == 'mdiff':
@@ -67,7 +55,7 @@ def efficient_comparison_output(file_names, file_contents, args):
     file_number = len(file_names)
     grouper = UnionFind(file_number)
     processor = CodePreprocessor(method)
-    similarity_method = get_similarity_method(args)
+    similarity_method = get_similarity_method(method)
 
     proccesed_files = [processor.preprocess_code(file_content, file_name) for file_content, file_name in zip(file_contents, file_names)]
     percentage_file = [0.00] * file_number
@@ -105,7 +93,7 @@ def full_comparison_output(file_names, file_contents, args):
 
     file_number = len(file_names)
     processor = CodePreprocessor(method)
-    similarity_method = get_similarity_method(args)
+    similarity_method = get_similarity_method(method)
 
     proccesed_files = [processor.preprocess_code(file_content, file_name) for file_content, file_name in zip(file_contents, file_names)]
     

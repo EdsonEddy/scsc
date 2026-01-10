@@ -1,0 +1,1 @@
+from .SimilarityChecker import Compare

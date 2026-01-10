@@ -78,6 +78,18 @@ scsc --path /path/to/directory --method ted
 scsc --path /path/to/directory --all /path/to/output_file_name
 ```
 
+Additionally, scsc can be used as a Python module. Here is an example of how to use it in your Python code:
+
+```python
+from scsc import Compare
+code_a = "a = 5"
+code_b = "c = 50"
+method = "ted"
+similarity = Compare(code_a, code_b, method)
+print(f"Similarity: {similarity}")
+```
+Only allowed methods are: `ted`, `trs`, `mdiff` and `csim`.
+
 ## Output Explanation
 
 ### Option `-f` (Specific Files)
