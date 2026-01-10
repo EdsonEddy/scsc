@@ -230,6 +230,28 @@ class Signature:
             words.append(line)
         return words
     
+# Signature override class, to be used as adapter
+class SignatureFactory(Signature):
+    def __init__(self, file_content):
+        self.file = file_content
+        self.LexicalStream = ""
+        self.Tokens = []
+        line_counter = 0
+        
+        # file_content is a string with the code lines
+        for line in file_content.splitlines():
+            line_counter += 1
+            line = self.trimComments(line.strip())
+            words = self.separateWords(line.strip())
+            if words:
+                line_tokens = self.getLexicalStream(words).split(" ")
+                for i in range(len(words)):
+                    self.Tokens.append(Token(line_tokens[i], words[i], line_counter))
+                    self.LexicalStream += " " + line_tokens[i]
+        
+        self.totalLines = line_counter
+        self.LexicalStream = self.LexicalStream.strip()
+
 """
 Match.java
 
@@ -365,8 +387,8 @@ class GstAdapter:
             "Threshold": 10,
         }
 
-        SignatureA = Signature(proccesed_code1)
-        SignatureB = Signature(proccesed_code2)
+        SignatureA = proccesed_code1
+        SignatureB = proccesed_code2
 
         # greedyStringTiling
         A = SignatureA.getTokenData()

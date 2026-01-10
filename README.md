@@ -88,7 +88,7 @@ method = "ted"
 similarity = Compare(code_a, code_b, method)
 print(f"Similarity: {similarity}")
 ```
-Only allowed methods are: `ted`, `trs`, `mdiff` and `csim`.
+Only allowed methods are: `ted`, `trs`, `mdiff`, `gst` and `csim`.
 
 ## Output Explanation
 

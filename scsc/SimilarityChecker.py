@@ -4,7 +4,7 @@ from .similarity import get_similarity_method
 
 def Compare(code_a, code_b, method):
     # Suported methods for direct comparison
-    suported_methods = ["ted", "mdiff", "trs", "csim"]
+    suported_methods = ["ted", "mdiff", "trs", "csim", "gst"]
     similarity_index = None
     if method in suported_methods:
         processor = CodePreprocessor(method)

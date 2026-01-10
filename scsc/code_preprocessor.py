@@ -4,6 +4,7 @@ from pygments.token import STANDARD_TYPES
 from pygments.lexers import guess_lexer
 from csim import ANTLR_parse
 from csim import Normalize
+from .gst_adapter import SignatureFactory
 import os
 
 # Code Preprocessor, includes methods for preprocessing code
@@ -61,6 +62,9 @@ class CodePreprocessor:
     def get_complete_path(self, file_name):
         return os.path.abspath(file_name)
     
+    def get_signature(self, code_string):
+        return SignatureFactory(code_string)
+
     def preprocess_code(self, code_string, file_name):
         if self.method == 'ted':
             return self.add_main(code_string)
@@ -69,7 +73,7 @@ class CodePreprocessor:
         elif self.method == 'lf':
             return self.get_complete_path(file_name)
         elif self.method == 'gst':
-            return self.get_complete_path(file_name)
+            return self.get_signature(code_string)
         elif self.method == 'trs':
             return self.tokenize_and_hash_code(code_string)
         elif self.method == 'csim':
