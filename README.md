@@ -78,6 +78,7 @@ scsc --path /path/to/directory --method ted
 scsc --path /path/to/directory --all /path/to/output_file_name
 ```
 
+### Using as a Python Module
 Additionally, scsc can be used as a Python module. Here is an example of how to use it in your Python code:
 
 ```python
@@ -111,7 +112,7 @@ Similarity Percentage: XX.XX%
 
 ### Option `-p` (Specific Files)
 
-When using the `-p` option to analyze an entire directory, scsc groups the files based on their similarity and displays unique files and groups of similar files. The output has the following format:
+When using the `-p` option to analyze an entire directory, scsc generates an output that lists files that are similar to each other along with their similarity percentages, as well as files that are unique (not similar to any other files). The output has the following format:
 
 ```sh
 scsc --path /path/to/directory
@@ -119,12 +120,14 @@ scsc --path /path/to/directory
 
 **Output:**
 ```sh
-Files that are similar with file1.py
-   file2.py with similarity percentage: XX.XX%
-   file3.py with similarity percentage: XX.XX%
-File that is unique: file4.py
-File that is unique: file5.py
+fileA.py is similar to fileC.py with similarity percentage: XX.XX%
+fileB.py is similar to fileD.py with similarity percentage: XX.XX%
+File that is unique: fileE.py
+File that is unique: fileF.py
 ```
+
+Note: When displays the File that is unique, it means that the file does not have significant similarity with other files in the directory. This is defined by the threshold set by the user (default is 0.75, equivalent to 75%).
+In this case, `fileE.py` and `fileF.py` do have similarity index less than the threshold with other files.
 
 - **Files that are similar with:** Shows the files that are similar to the main file `(file1.py)`, along with the similarity percentage. This text will be colored in red.
 - **File that is unique:** Shows the files that do not have significant similarity with other files in the directory. This text will be colored in green.
@@ -151,6 +154,7 @@ iling)
 - [Fingerprinting](https://en.wikipedia.org/wiki/Fingerprinting_(computing))
 - [Myers Diff Algorithm](https://en.wikipedia.org/wiki/Myers%27_difference_algorithm)
 - [Shingling Method](docs/shingling_method.md)
+- [Winnowing Local Fingerprinting Algorithm](docs/winnowing_algorithm.md)
 
 ## License
 
