@@ -47,11 +47,7 @@ def generate_output(file_names, groups, percentage_groups):
 
     return output
 
-def efficient_comparison_output(file_names, file_contents, args):
-    # Get the arguments
-    threshold = args.threshold
-    method = args.method
-
+def efficient_comparison_output(file_names, file_contents, method, threshold):
     file_number = len(file_names)
     grouper = UnionFind(file_number)
     processor = CodePreprocessor(method)
@@ -83,10 +79,7 @@ def efficient_comparison_output(file_names, file_contents, args):
     
     return generate_output(file_names, groups, percentage_file)
 
-def full_comparison_output(file_names, file_contents, args):
-    # Get the arguments
-    method = args.method
-    csv_file = args.all
+def full_comparison_output(file_names, file_contents, method, csv_file):
     # Add .csv extension if not present
     if not csv_file.endswith(".csv"):
         csv_file += ".csv"
@@ -125,10 +118,12 @@ def full_comparison_output(file_names, file_contents, args):
 
 def similarity_checker(file_names, file_contents, args):
     # Get the arguments
-    full_comparison = args.all
+    csv_file = args.all
+    method = args.method
+    threshold = args.threshold
     similarity_output = ""
-    if full_comparison:
-        similarity_output = full_comparison_output(file_names, file_contents, args)
+    if csv_file:
+        similarity_output = full_comparison_output(file_names, file_contents, method, csv_file)
     else:
-        similarity_output = efficient_comparison_output(file_names, file_contents, args)
+        similarity_output = efficient_comparison_output(file_names, file_contents, method, threshold)
     return similarity_output

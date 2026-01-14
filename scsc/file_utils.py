@@ -66,3 +66,25 @@ def process_files(args):
         file_contents.extend([content1, content2])
     
     return file_names, file_contents
+
+def simple_process_files(files_path):
+    # Storage for file names and contents
+    file_names = []
+    file_contents = []
+    # Process the files based on the provided arguments
+    if files_path:
+        path = files_path
+        # Check if the path is a valid directory
+        if not os.path.isdir(path):
+            print(f"Error: The path '{path}' is not a valid directory.")
+            return file_names, file_contents
+        # Process the files in the directory
+        for file in os.listdir(path):
+            file_path = os.path.join(path, file)
+            if os.path.isfile(file_path) and file.endswith('.py'):
+                file_name, content = read_file(file_path)
+                # Store the file name and content
+                file_names.append(file_name)
+                file_contents.append(content)
+    
+    return file_names, file_contents
