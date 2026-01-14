@@ -41,7 +41,7 @@ Source Code Similarity Checker is a tool designed to detect similarity between s
 - `--recursive`, `-r`: Recursively search through directories.
 - `--threshold`, `-t`: Similarity threshold (default: 0.75, range: 0.0 - 1.0).
 - `--method`, `-m`: The method to use for similarity detection. Options are `ted`, `gst`, `lf`, `trs`, `mdiff` and `csim`  (default: `ted`).
-- `--all`, `-a`: Compare each file with every other file and output the results to the specified CSV file.
+- `--all`, `-a`: Compare each file with every other file generating a similarity index matrix and output the results to the specified CSV file.
 
 
 ## Usage

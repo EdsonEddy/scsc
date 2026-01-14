@@ -105,12 +105,12 @@ def full_comparison_output(file_names, file_contents, method, csv_file):
             if similarity_matrix[i + 1][j + 1] != "":
                 continue
             elif i == j:
-                similarity_matrix[i + 1][j + 1] = "100.00%"
+                similarity_matrix[i + 1][j + 1] = "0.0"
             else:
                 file_b = proccesed_files[j]
                 similarity_percentage = similarity_method.get_similarity_coefficient(file_a, file_b)
-                similarity_matrix[i + 1][j + 1] = f"{similarity_percentage * 100:.2f}%"
-                similarity_matrix[j + 1][i + 1] = f"{similarity_percentage * 100:.2f}%"
+                similarity_matrix[i + 1][j + 1] = f"{similarity_percentage:.2f}"
+                similarity_matrix[j + 1][i + 1] = f"{similarity_percentage:.2f}"
     
     # Write the matrix to the CSV file
     with open(csv_file, mode='w', newline='') as file:
