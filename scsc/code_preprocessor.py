@@ -55,9 +55,9 @@ class CodePreprocessor:
         token_hashes = [hash(tuple(token)) for token in tokens]
         return token_hashes
     
-    def normalize_code(self, code_string):
-        T1 = ANTLR_parse(code_string)
-        return Normalize(T1)
+    def normalize_code(self, code_string, lang = 'python'):
+        T1 = ANTLR_parse(code_string, lang)
+        return Normalize(T1, lang)
     
     def get_abspath_and_content(self, file_name, file_content):
         if file_name is None:
