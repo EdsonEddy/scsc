@@ -3,7 +3,7 @@ from pygments import lex
 from pygments.token import STANDARD_TYPES
 from pygments.lexers import guess_lexer
 from csim import ANTLR_parse
-from csim import Normalize
+from csim import Normalize, PruneAndHash
 from .gst_adapter import SignatureFactory
 import os
 
@@ -57,7 +57,8 @@ class CodePreprocessor:
     
     def normalize_code(self, code_string, lang = 'python'):
         T1 = ANTLR_parse(code_string, lang)
-        return Normalize(T1, lang)
+        normalized_tree = Normalize(T1, lang)
+        return PruneAndHash(normalized_tree, lang)
     
     def get_abspath_and_content(self, file_name, file_content):
         if file_name is None:
