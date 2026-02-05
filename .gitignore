@@ -60,3 +60,7 @@ __pycache__/
 
 # Folder for notebook results
 /py_results/
+
+/notebooks/large_dataset
+/notebooks/medium_dataset
+/notebooks/small_dataset
