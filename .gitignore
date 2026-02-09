@@ -61,9 +61,4 @@ __pycache__/
 # Folder for notebook results
 /py_results/
 
-/notebooks/large_dataset
-/notebooks/medium_dataset
-/notebooks/small_dataset
-/notebooks/test_dataset
-/notebooks/filtering_dataset/false_pairs.txt
-/notebooks/filtering_dataset/true_pairs.txt
+/notebooks/datasets
