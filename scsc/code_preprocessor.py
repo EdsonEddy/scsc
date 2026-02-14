@@ -55,10 +55,12 @@ class CodePreprocessor:
         token_hashes = [hash(tuple(token)) for token in tokens]
         return token_hashes
     
-    def normalize_code(self, code_string, lang = 'python'):
-        T1 = ANTLR_parse(code_string, lang)
+    def normalize_code(self, file_name, code_string, lang = 'python'):
+        T1 = ANTLR_parse(file_name, code_string, lang)
         normalized_tree = Normalize(T1, lang)
-        return PruneAndHash(normalized_tree, lang)
+        pruned_tree, pruned_count = PruneAndHash(normalized_tree, lang)
+
+        return pruned_tree, pruned_count
     
     def get_abspath_and_content(self, file_name, file_content):
         if file_name is None:
@@ -68,7 +70,7 @@ class CodePreprocessor:
     def get_signature(self, code_string):
         return SignatureFactory(code_string)
 
-    def preprocess_code(self, code_string, file_name):
+    def preprocess_code(self, code_string, file_name = ''):
         if self.method == 'ted':
             return self.add_main(code_string)
         elif self.method == 'mdiff':
@@ -80,7 +82,7 @@ class CodePreprocessor:
         elif self.method == 'trs':
             return self.tokenize_and_hash_code(code_string)
         elif self.method == 'csim':
-            return self.normalize_code(code_string)
+            return self.normalize_code(file_name, code_string)
         
         # Default method return the same code
         return self.add_main(code_string)
