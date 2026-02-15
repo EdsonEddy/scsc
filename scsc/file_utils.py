@@ -59,11 +59,14 @@ def process_files(args):
                     file_contents.append(content)
     elif args.files:
         file1, file2 = args.files
-        file_name1, content1 = read_file(file1)
-        file_name2, content2 = read_file(file2)
-        # Store the file name and content
-        file_names.extend([file_name1, file_name2])
-        file_contents.extend([content1, content2])
+        if os.path.isfile(file1) and file1.endswith('.py') and os.path.isfile(file2) and file2.endswith('.py'):
+            file_name1, content1 = read_file(file1)
+            file_name2, content2 = read_file(file2)
+            # Store the file name and content
+            file_names.extend([file_name1, file_name2])
+            file_contents.extend([content1, content2])
+        else:
+            print("Error: Both files must exist and have a .py extension.")
     
     return file_names, file_contents
 
