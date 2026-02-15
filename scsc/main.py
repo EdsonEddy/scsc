@@ -30,7 +30,7 @@ def main():
     parser.add_argument('--recursive', '-r', action='store_true', help='Recursively search through directories')
 
     # Add the 'threshold' argument with range validation (0.0 - 1.0)
-    parser.add_argument('--threshold', '-t', type=get_threshold, default=0.75, help='The similarity threshold (default: 0.75, range: 0.0 - 1.0)')
+    parser.add_argument('--threshold', '-t', type=get_threshold, default=0.85, help='The similarity threshold (default: 0.75, range: 0.0 - 1.0)')
     
     # Add the 'method' argument
     parser.add_argument('--method', '-m', type=str, choices=['ted', 'gst', 'lf', 'trs', 'mdiff', 'csim'], default='ted', help='The method to use for similarity detection (default: ted)')
