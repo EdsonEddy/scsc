@@ -65,4 +65,5 @@ __pycache__/
 /notebooks/datasets/small/*.py
 /notebooks/datasets/medium/*.py
 /notebooks/datasets/large/*.py
+/notebooks/datasets/kaggleIA/*.py
 /notebooks/datasets/kaggle/*.py
