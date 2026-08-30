@@ -5,9 +5,9 @@ setup(
     version="1.3.1",
     packages=find_packages(),
     install_requires=[
-        "pygments",
-        "zss",
-        "csim"
+        "pygments==2.19.2",
+        "zss==1.2.0",
+        "csim==1.7.0"
     ],
     author="Eddy Lecoña",
     author_email="crew0eddy@gmail.com",
